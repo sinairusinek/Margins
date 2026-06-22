@@ -11,7 +11,7 @@ Plus the [methods document](methods/) and an [about page](about.qmd).
 
 ```bash
 # from the repo root:
-python3 dashboard/scripts/extract_in_scope.py   # builds _data/*.json from mbimarc-bhb.tsv
+python3 dashboard/scripts/extract_in_scope.py   # builds data/*.json from mbimarc-bhb.tsv
 python3 dashboard/scripts/sanity_check.py        # locks in methods §9 numbers
 
 quarto render dashboard                          # → dashboard/_site/
@@ -32,7 +32,7 @@ dashboard/
   scripts/
     extract_in_scope.py   TSV → JSON pipeline
     sanity_check.py       methods doc / dashboard drift guard
-  _data/                  built artefacts (gitignored if you prefer; checked in here for offline build)
+  data/                  built artefacts (gitignored if you prefer; checked in here for offline build)
 ```
 
 ## Continuous integration

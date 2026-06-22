@@ -6,7 +6,7 @@ toc: false
 
 ```{=html}
 <script>
-  window.MARGINS_SUMMARY = fetch("../_data/bhb_pre1800_summary.json").then(r => r.json());
+  window.MARGINS_SUMMARY = fetch("../data/bhb_pre1800_summary.json").then(r => r.json());
   function placeLabel(s) {
     const parts = (s || "").split("|");
     return parts.find(p => /[A-Za-z]/.test(p)) || parts[0] || "";

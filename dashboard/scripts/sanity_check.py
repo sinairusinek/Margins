@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SUMMARY = ROOT / "dashboard" / "_data" / "bhb_pre1800_summary.json"
+SUMMARY = ROOT / "dashboard" / "data" / "bhb_pre1800_summary.json"
 
 EXPECTED = {
     "total_in_scope": 10787,

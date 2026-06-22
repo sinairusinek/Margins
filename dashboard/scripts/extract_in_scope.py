@@ -1,9 +1,9 @@
 """Extract Margins in-scope (008-Year <= 1800) subset of mbimarc-bhb.tsv.
 
 Reads ../../mbimarc-bhb.tsv, emits:
-  dashboard/_data/bhb_pre1800.json      slim record list
-  dashboard/_data/bhb_pre1800_summary.json   precomputed aggregates
-  dashboard/_data/bhb_pre1800_places.geojson minimal places layer
+  dashboard/data/bhb_pre1800.json      slim record list
+  dashboard/data/bhb_pre1800_summary.json   precomputed aggregates
+  dashboard/data/bhb_pre1800_places.geojson minimal places layer
 
 Headline numbers also written to STDOUT so CI can diff them against the
 methods document (bibliographic_units_and_marc.md, section 9).
@@ -21,7 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 TSV = ROOT / "mbimarc-bhb.tsv"
-OUT_DATA = ROOT / "dashboard" / "_data"
+OUT_DATA = ROOT / "dashboard" / "data"
 OUT_DATA.mkdir(parents=True, exist_ok=True)
 
 # Column positions follow mbimarc-bhb.tsv header order (1-indexed in methods doc).

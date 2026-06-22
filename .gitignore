@@ -1,0 +1,13 @@
+.DS_Store
+.claude/
+
+# The raw 106 MB BHB TSV exceeds GitHub's 100 MB file size limit.
+# Ship the 26 MB zip instead; CI and the local README unzip on demand.
+mbimarc-bhb.tsv
+
+# Word backup
+*.bak.docx
+
+# Quarto build artefacts
+dashboard/_site/
+dashboard/.quarto/

@@ -1,0 +1,156 @@
+---
+title: "Desiderata"
+subtitle: "From free-text notes to a structured ontology"
+---
+
+The DiJeSt project — led by Sinai Rusinek and visualised in the [Looker Studio dashboard](https://datastudio.google.com/u/0/reporting/73a17dcc-f092-4dec-8c57-58b606862b2d/page/FPCXD) — produced a MARC-to-ontology crosswalk for the BHB. It maps authors to **FOAF**, titles to **BIBO / FABIO / PRISM**, languages and subjects to **DCTERMS**, and places to **KIMA + Wikidata + GeoNames**. Margins picks up where that crosswalk stops.
+
+## What the DiJeSt crosswalk already covers
+
+```{=html}
+<table class="matrix">
+<thead>
+<tr><th>MARC field</th><th>Content</th><th>Target ontology / authority</th><th>Status</th></tr>
+</thead>
+<tbody>
+<tr><td>001</td><td>Record ID</td><td>NAF identifier</td><td class="ok">mapped</td></tr>
+<tr><td>100 / 700</td><td>Persons</td><td><code>foaf:Person</code> · <code>foaf:name @lang</code> · <code>bio:date</code></td><td class="ok">mapped</td></tr>
+<tr><td>100, VIAF, Wikidata</td><td>Person authorities</td><td>NAF + VIAF + Wikidata Q-IDs</td><td class="ok">mapped</td></tr>
+<tr><td>110 / 710</td><td>Corporate bodies</td><td><code>foaf:Organization</code></td><td class="ok">mapped</td></tr>
+<tr><td>151 / 951</td><td>Places</td><td>KIMA URI + <code>wdt:P625</code> + <code>wdt:P214</code> + <code>wdt:P1566</code></td><td class="ok">mapped</td></tr>
+<tr><td>245 $a / $b</td><td>Titles / subtitles</td><td><code>bibo:shortTitle</code> · <code>fabio:hasSubtitle</code></td><td class="ok">mapped</td></tr>
+<tr><td>260c</td><td>Publication date</td><td><code>dcterms:created</code></td><td class="ok">mapped</td></tr>
+<tr><td>041</td><td>Language code</td><td><code>dcterms:language</code></td><td class="ok">mapped</td></tr>
+<tr><td>650 / 651 / 695</td><td>Subjects</td><td><code>dcterms:subject</code></td><td class="ok">mapped</td></tr>
+<tr><td>020 / 022</td><td>ISBN / ISSN</td><td><code>bibo:isbn</code> · <code>bibo:issn</code></td><td class="ok">mapped</td></tr>
+<tr><td><strong>500</strong></td><td>General Note (free text)</td><td>—</td><td class="gap">white space</td></tr>
+<tr><td><strong>915</strong></td><td>Haskama (extracted as one column, internally unstructured)</td><td>—</td><td class="gap">white space</td></tr>
+<tr><td><strong>912</strong></td><td>Chronogram (extracted phrase, letters not parsed)</td><td>—</td><td class="gap">white space</td></tr>
+<tr><td><strong>(none)</strong></td><td>Bowers sub-Manifestation distinctions (issue / state / cancel / variant / impression)</td><td>—</td><td class="gap">white space</td></tr>
+<tr><td>260b / 260f / 922 / 923</td><td>Publisher / printer (transcribed + partially controlled)</td><td>Authority record (proposed)</td><td class="partial">partial — see methods §9.4</td></tr>
+</tbody>
+</table>
+```
+
+The four **red rows** are the data-model gap that Margins proposes to close.
+
+## Sized desiderata
+
+Each row below names a transformation Margins will perform on the BHB (and on the complementary bibliographies that bring the corpus from ~18% to ~100% of the proposal target). Counts come from the [methods document, section 9](../methods/bibliographic_units_and_marc.qmd):
+
+| # | Transformation | Records in scope | Method |
+|---|---|---:|---|
+| 1 | Parse MARC 500 notes for the *scope-marker + verb + unit* grammar → `paratext_events` table | ~900 | Curated regex + manual validation |
+| 2 | Parse 915 haskama free text → structured (granting rabbi URI, place, date) | 2,259 | Hebrew NER + date parser |
+| 3 | Parse 912 chronogram → source phrase + counted letters + computed year (verified against 260c) | 5,351 | Apostrophe parser + gematria summation |
+| 4 | Cluster un-clustered records into Works (100+245 fuzzy match) | 6,056 | Authority + title similarity |
+| 5 | Extend place authority alignment | 205 (BHB) → all-corpus | Re-use DiJeSt; extend to Vinograd, Heller |
+| 6 | Build printer authority from 260f + 923 | ~506 populated → ~150–200 distinct | Cluster + manual curation |
+| 7 | Surface Item-level data from holdings (Footprints, NLI scans, Sefaria) | n/a (external) | External data integration |
+
+## Worked example: one note → JSON → LRMoo Turtle
+
+To demonstrate desideratum #1 concretely, here is a real BHB record — **MBI-0146263**, the responsa of R. Samuel di Medina printed in Salonika, 1594 — whose 500-note describes a Bowers-level **state** (in the strict sense: copies of the same edition differing because part of the type was reset and corrected during the print run, almost certainly under self-censorship pressure).
+
+```{=html}
+<div class="three-col">
+  <div>
+    <h4>1. Raw 500-note</h4>
+    <p class="he"><em>"בסימן קץ (בדפים קנז-קנח) נדפסה תשובה בעניין עבדים ושפחות של יהודה שמתגיירים. זה הנוסח המקורי. בחלק מהעותקים החליפו תשובה זו בשתי תשובות אחרות."</em></p>
+    <p style="font-size: 0.85rem;"><em>"In siman 190 (folios 157–158) a responsum on the conversion of Jews' slaves was printed. That is the original text. In some copies this responsum was replaced by two other responsa."</em></p>
+    <p class="caption">Source: BHB MBI-0146263, MARC 500. The phrase <span class="he">"בחלק מהעותקים"</span> is the scope-marker, <span class="he">"החליפו"</span> is the verb of replacement, and <span class="he">"תשובה"</span> is the unit — exactly the grammar described in <a href="../methods/bibliographic_units_and_marc.qmd#what-bowersgaskell-distinctions-look-like-in-bhb-free-text">methods §7</a>.</p>
+  </div>
+
+  <div>
+    <h4>2. Structured JSON extraction</h4>
+<pre><code>{
+  "manifestation": {
+    "id": "MBI-0146263",
+    "title": "פסקי...",
+    "place": {
+      "kima": "https://data.geo-kima.org/...",
+      "label_he": "שלוניקי",
+      "label_en": "Salonika"
+    },
+    "year": 1594
+  },
+  "paratext_events": [
+    {
+      "type": "state",
+      "scope": "in_some_copies",
+      "scope_marker_he": "בחלק מהעותקים",
+      "location_in_book": {
+        "siman": 190,
+        "folios": "157-158"
+      },
+      "change": {
+        "verb": "replaced",
+        "verb_marker_he": "החליפו",
+        "original_unit": {
+          "type": "responsum",
+          "topic": "conversion of slaves owned by Jews"
+        },
+        "replacement_unit": {
+          "type": "responsum",
+          "count": 2
+        }
+      },
+      "likely_motivation": "self_censorship",
+      "evidence": {
+        "source_field": "MARC_500",
+        "record": "MBI-0146263"
+      }
+    }
+  ]
+}</code></pre>
+    <p class="caption">Promotes the prose observation into typed fields. <code>scope</code>, <code>verb</code>, and unit type are drawn from a controlled vocabulary derived from the grammar in methods §7.</p>
+  </div>
+
+  <div>
+    <h4>3. LRMoo Turtle</h4>
+<pre><code>@prefix lrmoo: &lt;http://iflastandards.info/ns/lrm/lrmoo/&gt; .
+@prefix crm:   &lt;http://www.cidoc-crm.org/cidoc-crm/&gt; .
+@prefix mbi:   &lt;https://margins.example/mbi/&gt; .
+
+mbi:0146263 a lrmoo:F3_Manifestation_Product_Type ;
+   rdfs:label "Pisqei Maharashdam
+       (Salonika 1594, original setting)"@en .
+
+mbi:0146263_state1
+   a lrmoo:F3_Manifestation_Product_Type ;
+   crm:P130_shows_features_of mbi:0146263 ;
+   lrmoo:R28i_was_produced_by [
+     a lrmoo:F32_Carrier_Production_Event ;
+     crm:P16_used_specific_object
+       mbi:setting_siman190_variant ;
+     crm:P14_carried_out_by mbi:printer_diGara
+   ] ;
+   mbi:scope "in_some_copies"@en ;
+   mbi:likely_motivation "self_censorship"@en ;
+   mbi:evidence_source "BHB MARC 500"@en .
+
+mbi:setting_siman190_variant
+   a crm:E22_Human-Made_Object ;
+   crm:P130_shows_features_of
+     mbi:setting_siman190_original ;
+   rdfs:comment "Replacement type-setting
+     of siman 190, substituting two
+     responsa for the original."@en .</code></pre>
+    <p class="caption">The same fact expressed in <strong>LRMoo</strong>, the IFLA Library Reference Model object-oriented extension to CIDOC-CRM. LRMoo's <code>F32_Carrier_Production_Event</code> and the <code>E81_Transformation</code> pattern (here as <code>P130_shows_features_of</code> + a replacement <code>E22_Human-Made_Object</code> for the reset setting of type) are the ontology constructs that natively model Bowers's <em>state</em> — see <a href="../methods/bibliographic_units_and_marc.qmd#references-and-ontologies">methods §8</a>.</p>
+  </div>
+</div>
+```
+
+## What this artefact demonstrates for the ERC review
+
+- The transformation is **concrete**: a real record, a real note, a real target schema.
+- The target ontology is **off-the-shelf**, not invented for the proposal — LRMoo v1.0 was approved in April 2024 and is the IFLA-endorsed extension to CIDOC-CRM. Margins aligns to it, it does not propose a parallel ontology.
+- The grammar that drives the parsing (the scope-marker + verb + unit triple) is **derived from the data**, not imposed on it — the [methods document, section 7](../methods/bibliographic_units_and_marc.qmd) attests it from the BHB itself.
+- The sample size is **sized**: ~900 in-scope records carry the grammar today; the haskama and chronogram parsers cover 2,259 and 5,351 records respectively. None of those are speculative — they are present in the BHB now, structured loosely, awaiting the structural lift Margins proposes.
+
+## Open questions for implementation
+
+- **Granularity of the `paratext_events` vocabulary.** Margins will need to settle a controlled list for `change.verb` (replaced / suppressed / added / corrected / re-set) and for `unit.type` (title page / leaf / gathering / preface / approbation / responsum / paper) — see the closing tables of methods §7 for the empirical inventory.
+- **Linking states across copies.** The LRMoo state pattern models the *type* of variant; tying instances back to physical copies requires Item-level data, which is desideratum #7.
+- **Hebrew NLP tooling.** Haskama parsing (desideratum #2) depends on NER for rabbinic names, place names, and Hebrew date formulae — partly available, partly to be built within the project.
+- **Publication of the structured output.** The Turtle in the worked example above is presentational. Where the project's structured `paratext_events` and LRMoo records ultimately *live* — a Margins-hosted SPARQL endpoint, a static dump alongside this dashboard, or feeding back into the NLI Bibliography of the Hebrew Book itself — is an open question and a strategic choice. Re-integration with NLI is on the table.

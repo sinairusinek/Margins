@@ -1,0 +1,32 @@
+---
+title: "About"
+---
+
+## The site
+
+A two-page GitHub Pages dashboard accompanying the **Margins** ERC application. It documents the corpus the project will work with (BHB 1470–1800) and the data-model contributions the project proposes (notes-to-ontology transformations, exemplified on a worked record).
+
+The site is **complementary** to the existing [DiJeSt Looker Studio dashboard](https://datastudio.google.com/u/0/reporting/73a17dcc-f092-4dec-8c57-58b606862b2d/page/FPCXD), not a replacement. DiJeSt covers the full BHB span (1450–1991) with a place-centric and KIMA-aligned spatial view; this site adds the temporal axis, the paratext layer, the work-clustering view, and the Bowers/Gaskell signal sample for the Margins window.
+
+## Acknowledgements
+
+- **DiJeSt** — Digital Jewish Studies. Project led by Sinai Rusinek; place-data mapping and KIMA alignment of the BHB; the Looker Studio dashboard. Sharon Kurant assisted with the Looker Studio implementation.
+- **KIMA** — the Historical Gazetteer of Place Names in the Hebrew Script. Place-authority URIs reused throughout the Corpus map and the Desiderata example.
+- **Bibliography of the Hebrew Book project** (מפעל הביבליוגרפיה / MBI) at the National Library of Israel — the source of the underlying MARC records. The mbimarc-bhb TSV used here is the project's MARC dump.
+- **CIDOC-CRM SIG / IFLA** — for the LRMoo v1.0 ontology used in the Desiderata worked example.
+- All bibliographic scholarship cited in the [methods document](methods/bibliographic_units_and_marc.qmd) — particularly Fredson Bowers, Philip Gaskell, G. Thomas Tanselle, and the DCRMR / RBMS Bibliographic Standards Committee.
+
+## Sources and code
+
+- Data: `mbimarc-bhb.tsv` from the BHB / MBI project (107,977 records; the dashboard works with the in-scope subset of 10,787 records, 008-Year ≤ 1800).
+- Mapping crosswalk: `mapping-nli10-dijest.xlsx` from the DiJeSt project.
+- Extraction script: [`scripts/extract_in_scope.py`](https://github.com/sinairusinek/Margins/blob/main/dashboard/scripts/extract_in_scope.py) — emits the slim JSON, the summary aggregates, and the headline numbers used as the dashboard's sanity check.
+- Charts: Vega-Lite specs embedded directly in each page; the underlying summary JSON is in `_data/bhb_pre1800_summary.json`.
+
+## Licensing
+
+The dashboard code and methods document are released under whatever licence the parent repository uses. The underlying BHB data is the property of the National Library of Israel; redistribution of the in-scope (1470–1800) subset has been authorised for this dashboard.
+
+## Citing
+
+If you cite the dashboard or the methods document in a publication, please cite the DiJeSt project, KIMA, and the Bibliography of the Hebrew Book first — they are the data sources without which this work would not exist.

@@ -1,0 +1,266 @@
+---
+title: "The Corpus"
+subtitle: "BHB at the Margins scope: 1470–1800"
+---
+
+```{=html}
+<script>
+  // Shared data loader. The summary JSON is the source of truth for every chart on this page.
+  window.MARGINS_SUMMARY = fetch("../_data/bhb_pre1800_summary.json").then(r => r.json());
+</script>
+```
+
+The Margins proposal defines its corpus as all Hebrew-letter print from the beginnings of the craft to the end of the 18th century — roughly 1470–1800. This page restricts the BHB to that window and surfaces the layers that the existing DiJeSt dashboard does not yet show: a temporal axis, the paratext layer, work-cluster structure, and the Bowers/Gaskell signals that hide in free-text notes.
+
+## Scope & coverage
+
+```{=html}
+<div class="scope-banner">
+  <div class="scope-stat"><div class="n">10,787</div><div class="label">Records in scope</div></div>
+  <div class="scope-stat"><div class="n">1470–1800</div><div class="label">Year range</div></div>
+  <div class="scope-stat"><div class="n">~9,628</div><div class="label">Works (upper bound)</div></div>
+  <div class="scope-stat"><div class="n">205</div><div class="label">Places</div></div>
+  <div class="scope-stat"><div class="n">1,986</div><div class="label">Personal-name authors</div></div>
+  <div class="scope-stat"><div class="n">2,259</div><div class="label">Haskamot (915)</div></div>
+  <div class="scope-stat"><div class="n">5,351</div><div class="label">Chronograms (912)</div></div>
+</div>
+
+<p><strong>Coverage vs. proposal target.</strong> The proposal estimates ~60,000 in-scope titles in the wider bibliographic landscape (Vinograd, Yaari, Heller, incunabula catalogues). What the BHB MARC dump contributes:</p>
+
+<div class="coverage-bar">
+  <div class="fill" style="width: 18%"></div>
+  <div class="label">BHB dump: 10,787 / ~60,000 target ≈ 18%</div>
+</div>
+
+<p class="caption">The other ~82% will be assembled from complementary bibliographies and by Margins itself. See the <a href="../methods/bibliographic_units_and_marc.qmd">methods document, section 10</a>.</p>
+```
+
+## The print-productivity curve, 1470–1800
+
+```{=html}
+<div class="chart">
+  <div id="chart-productivity" style="width: 100%; min-height: 360px;"></div>
+  <div class="caption">Records per decade. Annotations: the <strong>1630s dip</strong> (123 records vs ~200/decade either side) tracks the disruption of central European print during the Thirty Years' War; the <strong>1780s–1790s acceleration</strong> (1.5× and 2.4× the mid-18th-c. baseline) reflects the intensification of Hebrew print in Galicia, Poland and Russia, and motivates the proposal's choice of 1800 as the upper bound.</div>
+</div>
+
+<script>
+window.MARGINS_SUMMARY.then(s => {
+  const data = Object.entries(s.by_decade)
+    .map(([d, n]) => ({decade: +d, n}))
+    .filter(d => d.decade >= 1470 && d.decade <= 1790);
+  const spec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container",
+    height: 320,
+    data: { values: data },
+    layer: [
+      { mark: { type: "bar", color: "#7c2d12" },
+        encoding: {
+          x: { field: "decade", type: "ordinal", title: "Decade" },
+          y: { field: "n", type: "quantitative", title: "Records" },
+          tooltip: [{ field: "decade", title: "Decade" }, { field: "n", title: "Records" }]
+        }
+      },
+      { mark: { type: "text", color: "#991b1b", dy: -8, fontWeight: "bold" },
+        data: { values: [
+          { decade: 1630, n: 123, lab: "Thirty Years' War dip" },
+          { decade: 1790, n: 1354, lab: "Late-18c. acceleration" }
+        ]},
+        encoding: {
+          x: { field: "decade", type: "ordinal" },
+          y: { field: "n", type: "quantitative" },
+          text: { field: "lab" }
+        }
+      }
+    ]
+  };
+  vegaEmbed("#chart-productivity", spec, { actions: false });
+});
+</script>
+```
+
+## Paratext intensifies through the early-modern period
+
+The BHB extracts haskama and chronogram statements as their own structured fields (915 and 912). When their coverage is plotted by century, both follow the well-attested historical curve of paratextual intensification:
+
+```{=html}
+<div class="chart">
+  <div id="chart-paratext-growth" style="width: 100%; min-height: 320px;"></div>
+  <div class="caption">Share of in-scope records carrying a structured haskama (rabbinic approbation, MARC 915) or a chronogram (title-page Hebrew-letter date phrase, MARC 912). These are <em>floor</em> percentages — extraction-bounded, not actual-presence-bounded. The 18th-century rates (29% haskamot, 61% chronograms) reflect both the rise of the practices and the depth of BHB cataloguing in that period.</div>
+</div>
+
+<script>
+window.MARGINS_SUMMARY.then(s => {
+  const counts = s.by_century;
+  const rows = [];
+  Object.entries(s.haskama_by_century).forEach(([c, n]) => {
+    rows.push({ century: +c + "c.", kind: "Haskama (915)", pct: 100 * n / counts[c] });
+  });
+  Object.entries(s.chronogram_by_century).forEach(([c, n]) => {
+    rows.push({ century: +c + "c.", kind: "Chronogram (912)", pct: 100 * n / counts[c] });
+  });
+  const spec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container",
+    height: 280,
+    data: { values: rows },
+    mark: { type: "bar" },
+    encoding: {
+      x: { field: "century", type: "ordinal", title: "Century" },
+      xOffset: { field: "kind" },
+      y: { field: "pct", type: "quantitative", title: "% of records in century", scale: { domain: [0, 70] } },
+      color: { field: "kind", scale: { range: ["#7c2d12", "#0e7490"] }, title: "Paratext field" },
+      tooltip: [
+        { field: "century", title: "Century" },
+        { field: "kind", title: "Field" },
+        { field: "pct", title: "% of records", format: ".1f" }
+      ]
+    }
+  };
+  vegaEmbed("#chart-paratext-growth", spec, { actions: false });
+});
+</script>
+```
+
+## The early-modern Hebrew print map
+
+The DiJeSt dashboard's all-corpus map is dominated by Tel Aviv, Jerusalem, Warsaw, New York. Restricted to the Margins window (1470–1800), the geography is completely different — the classical centres of early-modern Hebrew print emerge:
+
+```{=html}
+<div class="chart">
+  <div id="chart-places" style="width: 100%; min-height: 340px;"></div>
+  <div class="caption">Top 12 in-scope places by record count. Venice and Amsterdam together account for ~27% of in-scope output. Place labels normalised across <code>Hebrew|Latin</code> ordering. See the <a href="../methods/bibliographic_units_and_marc.qmd">methods document, sections 9.4 and 10.2</a> for caveats on the 922/923 publisher/printer authority columns.</div>
+</div>
+
+<script>
+window.MARGINS_SUMMARY.then(s => {
+  const top12 = s.top_places.slice(0, 12).map(([place, n]) => {
+    const parts = place.split("|");
+    const label = parts.find(p => /[A-Za-z]/.test(p)) || parts[0];
+    return { place: label, place_full: place, n };
+  });
+  const spec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container",
+    height: 320,
+    data: { values: top12 },
+    mark: { type: "bar", color: "#0e7490" },
+    encoding: {
+      y: { field: "place", type: "nominal", sort: "-x", title: null },
+      x: { field: "n", type: "quantitative", title: "Records in scope" },
+      tooltip: [
+        { field: "place_full", title: "Place" },
+        { field: "n", title: "Records" }
+      ]
+    }
+  };
+  vegaEmbed("#chart-places", spec, { actions: false });
+});
+</script>
+```
+
+### Embedded DiJeSt spatial view (for global context)
+
+The DiJeSt dashboard remains the canonical interactive map across the full BHB span. Embedded here for cross-reference:
+
+```{=html}
+<iframe class="dijest-iframe"
+        src="https://datastudio.google.com/embed/u/0/reporting/73a17dcc-f092-4dec-8c57-58b606862b2d/page/FPCXD"
+        height="640"
+        allowfullscreen></iframe>
+```
+
+## Most-republished Works in scope
+
+Work-clusters are surfaced by the MARC 130 uniform-title field. Below: in-scope Works with the most Manifestations. Liturgical aggregations dominate, which is itself a finding — the BHB clusters individual liturgical printings under generic uniform titles (`תפילות. שונות.`) rather than treating each as a distinct Work.
+
+```{=html}
+<div class="chart">
+  <div id="chart-works" style="width: 100%; min-height: 340px;"></div>
+  <div class="caption">In-scope Manifestations grouped by MARC 130 uniform title. 3,572 distinct uniform titles in scope; 4,731 records carry a 130 (the remaining 6,056 are presumed single-Manifestation Works).</div>
+</div>
+
+<script>
+window.MARGINS_SUMMARY.then(s => {
+  const top = s.top_works.slice(0, 10).map(([w, n]) => ({ work: w, n }));
+  const spec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container",
+    height: 300,
+    data: { values: top },
+    mark: { type: "bar", color: "#7c2d12" },
+    encoding: {
+      y: { field: "work", type: "nominal", sort: "-x", title: null, axis: { labelLimit: 280 } },
+      x: { field: "n", type: "quantitative", title: "Manifestations in scope" },
+      tooltip: [{ field: "work" }, { field: "n", title: "Manifestations" }]
+    }
+  };
+  vegaEmbed("#chart-works", spec, { actions: false });
+});
+</script>
+```
+
+## Bowers/Gaskell signals in free-text notes
+
+A regex pass over the MARC 500 General Note column, using the **scope-marker + verb + unit** grammar described in the [methods document, section 7](../methods/bibliographic_units_and_marc.qmd#what-bowersgaskell-distinctions-look-like-in-bhb-free-text), surfaces records whose notes describe Bowers-level distinctions — issues, states, cancels, variants, separate impressions:
+
+```{=html}
+<div class="signal-grammar">
+  <strong>The grammar:</strong>
+  <span class="he">{ בחלק מהעותקים | יש טפסים | במקביל | בעותק זה }</span>
+  + <span class="he">{ הוחלף | נשמט | הושמט | נדפס מחדש | הוסף }</span>
+  + <span class="he">{ שער | דף | קונטרס | הקדמה | הסכמה | תשובה | נייר }</span>
+  <br><em>scope-marker + verb of replacement/omission/reprinting + structural unit</em>
+</div>
+
+<div class="chart">
+  <div id="chart-signals" style="width: 100%; min-height: 320px;"></div>
+  <div class="caption">~900 records (~8.3% of in-scope) carry at least one Bowers-flavoured signal in their 500-note. This is a <em>floor</em> count of records <em>describable</em> with Bowers vocabulary, not a population count of the underlying phenomena. Promoting these to structured <code>paratext_events</code> is desideratum #1 — see the <a href="../desiderata/index.qmd">Desiderata page</a>.</div>
+</div>
+
+<script>
+window.MARGINS_SUMMARY.then(s => {
+  const labels = {
+    state: "State (in some copies)",
+    variant_copies: "Variant copies exist",
+    issue: "Issue (new title page)",
+    cancel: "Cancel leaf",
+    impression: "Impression / reprint",
+    replacement: "Replacement (any unit)",
+    variant_text: "Variant text",
+    forged: "Forged / fake imprint",
+    omission: "Omission / suppression"
+  };
+  const data = Object.entries(s.signals_by_kind).map(([k, n]) => ({
+    kind: labels[k] || k, n
+  }));
+  const spec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container",
+    height: 280,
+    data: { values: data },
+    mark: { type: "bar", color: "#ea580c" },
+    encoding: {
+      y: { field: "kind", type: "nominal", sort: "-x", title: null, axis: { labelLimit: 240 } },
+      x: { field: "n", type: "quantitative", title: "Records (in scope)" },
+      tooltip: [{ field: "kind" }, { field: "n", title: "Records" }]
+    }
+  };
+  vegaEmbed("#chart-signals", spec, { actions: false });
+});
+</script>
+```
+
+## Caveats
+
+The DiJeSt dashboard already articulates three caveats: uneven survival of Hebrew print, project-defined cataloguing choices, and semi-automatic place-name processing. Margins's reading of the same data adds three **structural** caveats specific to the in-scope window:
+
+```{=html}
+<div class="caveat"><strong>922 (controlled publisher)</strong> is essentially empty in scope — only 20 records carry it. Any in-scope "count of publishers" must be reconstructed from the transcribed 260b column or built fresh.</div>
+
+<div class="caveat"><strong>923 (controlled printer)</strong> is populated for ~5% of in-scope records (506 rows) and barely deduplicated — 353 distinct values from 506 populated records means orthographic and transliteration variants are not collapsed. Treat printer counts as noisy upper bounds.</div>
+
+<div class="caveat"><strong>533 / 535 (reproduction / originals location)</strong> are negligible in scope (20 / 2,387) — those fields predominantly serve 19th-/20th-century cataloguing and are not a useful Item-level signal for the Margins window.</div>
+```
+
+These caveats motivate desiderata #5 (printer authority) and #7 (Item-level data integration) on the [Desiderata page](../desiderata/index.qmd).

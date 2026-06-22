@@ -1,0 +1,70 @@
+name: Build and deploy Margins dashboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "dashboard/**"
+      - "mbimarc-bhb-tsv.zip"
+      - "bibliographic_units_and_marc.md"
+      - ".github/workflows/publish.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Unzip BHB TSV (kept zipped in the repo because the raw TSV is 106 MB)
+        run: |
+          if [ ! -f mbimarc-bhb.tsv ]; then
+            unzip -o mbimarc-bhb-tsv.zip
+          fi
+
+      - name: Extract in-scope subset and summary
+        run: python3 dashboard/scripts/extract_in_scope.py
+
+      - name: Sanity-check headline numbers against methods §9
+        run: python3 dashboard/scripts/sanity_check.py
+
+      - name: Stage methods doc inside dashboard tree
+        run: |
+          { echo '---'
+            echo 'title: "Bibliographic units, MARC mapping, and counting for the Margins project"'
+            echo '---'
+            echo
+            tail -n +2 bibliographic_units_and_marc.md
+          } > dashboard/methods/bibliographic_units_and_marc.qmd
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render Quarto site
+        run: quarto render dashboard
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dashboard/_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

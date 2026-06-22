@@ -452,6 +452,132 @@ Bracketed/inferred dates (`[תקל"ו]`, `c. 1755`) appear in 260c but not in 00
 
 For completeness — the proposal's own timeline (5 years; sample collection and infrastructure in Y1, expansion Y2, integrated platform and broadside test in Y3, dissemination Y4-5) is the **fifth time axis** in the data model: the *processing* timestamp on every dataset and annotation. A clean implementation will record per-record (a) the BHB-imprint date, (b) the surrogate-creation date, and (c) the Margins-ingest / annotation date, so that the data state at any point in the project is reproducible.
 
+## 11. Worked example: the Venice Haggadot — where WEMI breaks
+
+A single Work in the BHB illustrates the inadequacy of WEMI better than any abstract argument: **הגדה של פסח** (Passover Haggadah). The TSV holds 30+ pre-1800 records under 245a `הגדה של פסח`; below is a slice that exposes **multiple Expressions of one Work, and multiple Manifestations of one Expression** — and then a sub-Manifestation case that WEMI cannot model at all.
+
+### 11.1 The Work and its Expressions
+
+Treating the unqualified `הגדה של פסח` as the Work, the BHB pre-1800 records cluster into several distinct **Expressions**, distinguished by the accompanying language(s) and rite:
+
+| Expression (text-version) | 041 signature | Sample Manifestations (MBI · place · year) |
+|---|---|---|
+| **A.** Hebrew alone | `heb` | 000118987 Sulzbach 1711 · 000118989 Amsterdam 1712 · 000118990 Amsterdam 1712 · 000119025 Metz 1765 · 000119060 Fürth 1790 |
+| **B.** Hebrew + Ladino translation | `heb\|lad` | 000118968 Venice 1609 · 000118973 Venice 1629 · 000118983 Venice 1695 · 000118992 Venice 1716 · 000119016 Venice 1758 |
+| **C.** Hebrew + Yiddish translation | `heb\|yid` | 000118972 Venice 1629 · 000119002 Amsterdam 1733 · 000119062 Hrodna 1791 · 000119092 Frankfurt-Oder 1798 |
+| **D.** Hebrew + Judeo-Italian translation | `heb\|jit` | 000118993 Venice 1716 · 000118994 Venice 1716 · 000119004 Venice 1740 · 000119005 Venice 1740 · 000119015 Venice 1758 |
+| **E.** Hebrew + Judeo-Arabic | `heb\|ghb` | 000119063 Vienna 1791 · 000119065 Sulzbach 1792 · 000119077 [Offenbach] 1795 |
+| **F.** Hebrew + English | `heb\|eng` | 000119073 London 1794 |
+
+Expressions B, C, and D each have multiple Manifestations in Venice alone across the 17th–18th centuries. The 500-notes make the genealogical relationships explicit: the 1629 Venice Ladino Haggadah (000118973) records `הציורים וה"פתרון" (התרגום) לפי הוצאת ויניציאה שס"ט` — "the illustrations and translation follow the Venice 1609 edition" — i.e., a derivative Manifestation of the same Expression.
+
+### 11.2 Multiple Manifestations of one Expression — and a sub-Manifestation case WEMI cannot hold
+
+The 1716 and 1740 Venice Judeo-Italian Haggadot are the diagnostic case. For 1716 Venice (heb|jit) the BHB carries **two records**, 000118993 and 000118994, both Expression D. Note 500 on 000118993 states:
+
+> דומה להוצאת ויניציאה שפ"ט. **יצאה בשלוש מהדורות: בלשון איטליאנו, בלשון אשכנזים ובלשון ספרדים [לאדינו].**
+
+— "issued in three *mehadurot*: in Italian, in Ashkenazic [Yiddish], and in Sephardi [Ladino]." So the BHB cataloguer is already using **מהדורה** to mean *language-version*, i.e., Expression — confirming §6/§7's observation that the field's vocabulary collapses Expression and Manifestation.
+
+But 000118993 and 000118994 are *both* Judeo-Italian (Expression D), printed Venice 1716. Note 500 on 000118994:
+
+> ...**ההבדל היחיד בין שתי ההגדות הוא בברכת המזון, שזו שלפנינו נוסחה אשכנזי.**
+
+— "the only difference between the two Haggadot is in the Grace After Meals: this one has the Ashkenazi rite." The two records share setting of type for the bulk; one quire (Birkat HaMazon) is swapped. The same observation recurs verbatim for 1740 Venice (000119004 / 000119005).
+
+Under WEMI this is undecidable. Two options, both wrong:
+- Call them one Manifestation with a copy-level variant → loses the fact that they are *distinct publishing units*, sold separately to Italian-rite vs. Ashkenazi-rite buyers.
+- Call them two Manifestations of the same Expression → loses the fact that ~95% of the setting is identical, and conceals the **partial-resetting** evidence that lives in the swapped quire.
+
+In Bowers/Gaskell terms this is a textbook **issue** (same body sheets, swapped preliminary or terminal gathering producing a distinct publishing unit), with the swapped gathering itself being a small re-setting. LRMoo can model it through an `F32 Carrier Production Event` chain feeding two distinct `F3 Manifestation Product Types` that share most of their `F24 Publication Expression` but diverge on one quire. WEMI / IFLA-LRM / BIBFRAME cannot represent it natively — and the BHB consequently parks the distinction in a 500-note that is grammatical to a human reader but opaque to any aggregation built on the structured fields.
+
+### 11.3 The structure as a tree
+
+```
+יצירה (Work) ──── הגדה של פסח
+│
+├── ביטוי A · עברית בלבד  (heb)
+│   ├── התגלמות · זולצבאך 1711                       [MBI 000118987]
+│   ├── התגלמות · אמשטרדם 1712                       [MBI 000118989]
+│   │   └── הערה: דינים באשכנזית, אותיות צו"ר; תרגום אשכנזי לפיוטים
+│   ├── התגלמות · אמשטרדם 1712                       [MBI 000118990]
+│   │   └── הערה: דינים באשכנזית-יהודית; תרגום אשכנזי-יהודי לפיוטים
+│   ├── התגלמות · ויניציאה 1601                      [MBI 000184737]
+│   ├── התגלמות · ויניציאה 1603                      [MBI 000184739]
+│   ├── התגלמות · ויניציאה 1604                      [MBI 000184740]
+│   ├── התגלמות · זולצבאך 1726                       [MBI 000118999]
+│   ├── התגלמות · זולצבאך 1746                       [MBI 000119008]
+│   ├── התגלמות · מיץ 1765                           [MBI 000119025]
+│   ├── התגלמות · פיורדא 1790                        [MBI 000119060]
+│   └── התגלמות · פיורדא 1792                        [MBI 000119066]
+│
+├── ביטוי B · עברית + לאדינו  (heb|lad)             "בלשון ספרדים"
+│   ├── התגלמות · ויניציאה 1609                      [MBI 000118968]
+│   │   └── הערה: הציורים וה"פתרון" שימשו אב-טיפוס להוצאות הבאות בויניציאה
+│   ├── התגלמות · ויניציאה 1629                      [MBI 000118973]
+│   │   └── הערה: הציורים והתרגום לפי ויניציאה שס"ט (1609)
+│   ├── התגלמות · ויניציאה 1695                      [MBI 000118983]
+│   ├── התגלמות · ויניציאה 1716                      [MBI 000118992]
+│   │   └── (אחות לויניציאה 1716 jit — ביטוי D)
+│   ├── התגלמות · אמשטרדם 1712                       [MBI 000118988]
+│   ├── התגלמות · ויניציאה 1740                      (היא הסדרה האיטלקית)
+│   └── התגלמות · ויניציאה 1758                      [MBI 000119016]
+│
+├── ביטוי C · עברית + אידיש  (heb|yid)              "בלשון אשכנזים"
+│   ├── התגלמות · ויניציאה 1629                      [MBI 000118972]
+│   ├── התגלמות · אמשטרדם 1733                       [MBI 000119002]
+│   ├── התגלמות · הוראדנא 1791                       [MBI 000119062]
+│   └── התגלמות · פפד"א 1798                         [MBI 000119092]
+│
+├── ביטוי D · עברית + יהודית-איטלקית  (heb|jit)     "בלשון איטליאנו"
+│   ├── התגלמות · ויניציאה 1716                      ← נקודת השבר: שני Issues
+│   │   ├── הוצאה (Issue) 1 · ברכת המזון בנוסח איטליאני        [MBI 000118993]
+│   │   │     └─ note 500: "יצאה בשלוש מהדורות: בלשון איטליאנו,
+│   │   │                   בלשון אשכנזים ובלשון ספרדים"
+│   │   └── הוצאה (Issue) 2 · ברכת המזון בנוסח אשכנז           [MBI 000118994]
+│   │         └─ note 500: "ההבדל היחיד בין שתי ההגדות הוא
+│   │                       בברכת המזון, שזו שלפנינו נוסחה אשכנזי"
+│   │         └─ יחידה מוחלפת: קונטרס ברכת המזון בלבד
+│   │
+│   ├── התגלמות · ויניציאה 1740                      ← אותה תופעה חוזרת
+│   │   ├── הוצאה 1 · ברכת המזון בנוסח איטליאני               [MBI 000119004]
+│   │   │     └─ note 500: "נוסח ההגדה כמנהג בני רומה"
+│   │   └── הוצאה 2 · ברכת המזון בנוסח אשכנז                  [MBI 000119005]
+│   │         └─ note 500: "ההבדל היחיד … הוא בברכת המזון"
+│   │
+│   └── התגלמות · ויניציאה 1758                      [MBI 000119015]
+│         └─ 250: "נדפס … מחדש לתשוקת … גד בכ"ר שמואל פואה"
+│         └─ note 500: "נוסח בני רומה. הציורים על-פי ויניציאה שפ"ט"
+│
+├── ביטוי E · עברית + יהודית-ערבית  (heb|ghb)
+│   ├── התגלמות · ווין 1791                          [MBI 000119063]
+│   ├── התגלמות · זולצבאך 1792                       [MBI 000119065]
+│   └── התגלמות · [אופנבאך] 1795                     [MBI 000119077]
+│
+└── ביטוי F · עברית + אנגלית  (heb|eng)
+    └── התגלמות · London 1794                        [MBI 000119073]
+```
+
+Reading the tree:
+
+- The **Work** (root) is the abstract Haggadah-of-Pesach text-tradition.
+- Each **Expression** branch corresponds to a distinct text-version defined by its language pairing (and, implicitly, by its target rite-community — Italian / Sephardi / Ashkenazi / Yemenite-North-African / Anglo).
+- Each **Manifestation** is a year×place×press print event recorded as one BHB record.
+- Under Expression D, the 1716 and 1740 Venice nodes break a fourth time into **Issues** — sub-Manifestations sharing setting of type but diverging in one swapped quire. WEMI has no slot for this fourth level; in BHB it appears as two MARC records *plus* a 500-note that cross-references them.
+- The dashed cross-link between B-1716-Venice and D-1716-Venice (and the Yiddish version printed the same year, captured in note 500 of MBI 000118993) reflects the fact that Bragadin issued a *coordinated set of three language-issues* from a partially shared production — itself a relationship type ("sibling-Manifestation-by-press-event") that WEMI does not name and that LRMoo would model through a shared `F32 Carrier Production Event`.
+
+### 11.4 An elaborated 500-note on MBI 000118994 (Venice 1716, heb\|jit)
+
+Below is a redrafted 500-note that pushes structure into the narrative, of the kind that would be needed if the BHB chose to encode sub-Manifestation distinctions while still respecting MARC's free-text envelope. Hebrew first; an English rendering follows. The bracketed `[[…]]` tokens are the structural hooks a parser would need to lift this into an `issue` / `state` / `variant` field — none of which exists in MARC today.
+
+> [[יצירה]] הגדה של פסח · [[ביטוי]] עברית + יהודית-איטלקית (jit), כמנהג בני רומה · [[התגלמות]] ויניציאה, ת"ע"ו (1716), בדפוסי בראגאדין · [[הוצאה]] זו אחת משתי הוצאות-מקבילות שיצאו באותה שנה בויניציאה מאותו סדר-אותיות: **שתיהן בלשון איטליאנה, ושתיהן זהות בכל פרקי ההגדה — פרט לקונטרס ברכת המזון**. בעותק שלפנינו ברכת המזון בנוסח אשכנז; בהוצאה המקבילה (BHB 000118993) ברכת המזון בנוסח איטליאני. [[יחידה מוחלפת]] קונטרס ברכת המזון בלבד; שאר הגליונות נדפסו מאותו סדר. [[מקבילה נוספת בלשון אחרת]] באותה שנה יצאה בויניציאה גם הוצאה בלשון אשכנזים (יידיש) ובלשון ספרדים [לאדינו] — שלוש הוצאות־לשון של אותה הגדה, מהן שתיים (האיטלקיות) חולקות גם את גוף הסדר. [[תלות בהוצאה קודמת]] הציורים פיתוחי־עץ, על־פי הוצאת ויניציאה שפ"ט (1629). [[מקור הביבליוגרפי]] יערי 82; אוצר ההגדות 132. [[הערה תיאורטית]] תופעה זו אינה ניתנת לתיאור בסכמת WEMI: שני העותקים אינם "Manifestation אחד עם הבדל ברמת ה-Item" (כי מדובר ביחידת הוצאה נפרדת המופנית לקהל ליטורגי אחר), ואינם שני Manifestations עצמאיים (כי ~95% מן הסדר משותף). דרושה רמת-ביניים בין Manifestation ל-Item — כגון `F32 Carrier Production Event` ב־LRMoo, או הקטגוריה Bowers-ית של *issue* — להחזיק את האבחנה.
+
+> [[Work]] Haggadah of Pesach · [[Expression]] Hebrew + Judeo-Italian (jit), Italian rite · [[Manifestation]] Venice 1716, Bragadin press · [[Issue]] One of two parallel issues printed Venice 1716 from the same setting of type: **both in Judeo-Italian, identical throughout except for the Birkat HaMazon quire**. This copy carries Ashkenazi-rite Birkat HaMazon; the parallel issue (BHB 000118993) carries Italian-rite Birkat HaMazon. [[Swapped unit]] only the Birkat HaMazon gathering differs; the remaining sheets are from one setting. [[Sister edition in another language]] in the same year Venice also issued the Haggadah in Yiddish and in Ladino — three language-issues of one Haggadah, two of which (the Italian-language ones) further share the main setting. [[Dependency on earlier edition]] the woodcut illustrations follow the Venice 1609 edition. [[Bibliographic references]] Yaari 82; Otzar HaHaggadot 132. [[Theoretical note]] this case cannot be represented in WEMI: the two copies are neither "one Manifestation with an Item-level variant" (they are distinct publishing units aimed at different liturgical audiences) nor two independent Manifestations (~95% of the setting is shared). It requires a level *between* Manifestation and Item — e.g. LRMoo's `F32 Carrier Production Event`, or Bowers's *issue* — to be captured.
+
+The note demonstrates why §5's recommendation matters operationally: **(a)** the language-pairing axis (`heb` vs `heb|jit` vs `heb|yid` vs `heb|lad`) is Expression-level and should be a structured facet, not buried inside 041 + 500; **(b)** the Italian-rite vs Ashkenazi-rite axis within Expression D is *sub-Manifestation* (Bowers issue), which neither MARC nor WEMI has a slot for; **(c)** the illustration-genealogy (1716 follows 1609) is a separate cross-Manifestation link that belongs in something like `bf:hasDerivative` or LRMoo's transformation chain.
+
+A counting model trained only on `count(*) GROUP BY 130, 041` will return **one row** for Venice-1716-heb|jit Haggadot, hiding the two issues. The data needed to surface them is sitting in 500, in Hebrew prose, in a pattern that §7's regex grammar (`ההבדל היחיד … הוא ב…`, `יצאה בשלוש מהדורות`, `כמו בהוצאה אחרת שיצאה באותה שנה`) could extract.
+
 ## Appendix: Hebrew terminology for the Bowers/Gaskell vocabulary
 
 Hebrew bibliographic scholarship (Friedberg's *Bet Eked Sefarim*, Yaari, Habermann, Vinograd's *Thesaurus*, the BHB / מפעל הביבליוגרפיה) has settled terms for most of the Bowers/Gaskell vocabulary. A few have no canonical Hebrew equivalent and are handled periphrastically. Marked **[std]** for established terms, **[var]** where usage varies, **[periphr.]** where Hebrew normally describes the concept rather than naming it.

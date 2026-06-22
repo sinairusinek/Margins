@@ -1,36 +1,34 @@
 ---
-title: "Margins"
-subtitle: "The early-modern Hebrew print corpus, seen through the Bibliography of the Hebrew Book"
+title: "Margins — BHB Dashboard"
+toc: false
 ---
 
-This site accompanies the **Margins** ERC application. It documents the corpus the project will work with, the data the project will build on, and the data-model gaps the project proposes to close.
+```{=html}
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 2rem 0;">
+  <a href="corpus/" style="text-decoration: none; color: inherit;">
+    <div class="scope-stat" style="border-left-color: #0e7490;">
+      <div class="label">Dashboard</div>
+      <div style="font-size: 1.4rem; font-weight: 600; margin: 0.3rem 0;">The Corpus</div>
+      <div style="font-size: 0.9rem; color: #6b7280;">10,787 records · 1470–1800 · charts &amp; distributions</div>
+    </div>
+  </a>
+  <a href="desiderata/" style="text-decoration: none; color: inherit;">
+    <div class="scope-stat" style="border-left-color: #7c2d12;">
+      <div class="label">Desiderata</div>
+      <div style="font-size: 1.4rem; font-weight: 600; margin: 0.3rem 0;">Notes → ontology</div>
+      <div style="font-size: 0.9rem; color: #6b7280;">Coverage matrix · worked LRMoo example</div>
+    </div>
+  </a>
+  <a href="methods/bibliographic_units_and_marc.html" style="text-decoration: none; color: inherit;">
+    <div class="scope-stat" style="border-left-color: #6b7280;">
+      <div class="label">Methods</div>
+      <div style="font-size: 1.4rem; font-weight: 600; margin: 0.3rem 0;">Documentation</div>
+      <div style="font-size: 0.9rem; color: #6b7280;">FRBR · MARC · Bowers · Hebrew terminology</div>
+    </div>
+  </a>
+</div>
 
-The Margins corpus is defined in the proposal as **all books and broadsides printed in Hebrew fonts, from the beginning of Hebrew printing until the end of the 18th century** — c.1470–1800. This site explores that window through the **Bibliography of the Hebrew Book (BHB)**, the National Library of Israel's catalogue of Hebrew-letter print before 1960, and the **DiJeSt** project that mapped and Kima-aligned its place data.
-
-## What you'll find here
-
-### [The Corpus](corpus/index.qmd)
-
-A dashboard of the BHB restricted to the Margins window. Adds three layers to the existing DiJeSt visualization:
-
-- **Time as a structural axis** — the print-productivity curve 1470–1800 with the 1630s Thirty Years' War dip and the late-18th-c. acceleration.
-- **Paratext as data** — the haskama (rabbinic approbation) and chronogram (title-page letter-dating) layers already structured in BHB fields 915 and 912, charted over space and time.
-- **Bowers/Gaskell signals** — the issue / state / cancel / variant / impression distinctions that live in free-text notes, surfaced as a study sample with the parsing grammar made explicit.
-
-### [Desiderata](desiderata/index.qmd)
-
-What Margins will add to the existing data. A coverage matrix of MARC fields against the DiJeSt crosswalk — green where the target ontology (FOAF / BIBO / FABIO / Kima / Wikidata) already maps, red where the white space lies. One worked example transforms a real BHB free-text note (Salonika 1594) into structured JSON and then into LRMoo Turtle, demonstrating the project's data-engineering contribution at the level of a single record.
-
-### [Methods](methods/bibliographic_units_and_marc.qmd)
-
-The conceptual scaffolding behind the dashboard: how Work / Expression / Manifestation / Item map (and fail to map) to MARC; how Bowers/Gaskell distinctions live in free-text notes; what ontologies already model these distinctions; and the Hebrew terminology that the BHB cataloguers actually use.
-
-### [About](about.qmd)
-
-Acknowledgements (DiJeSt, KIMA, Sharon Kurant, the BHB project) and the data, code, and licensing notes.
-
-## Sister sites
-
-The original DiJeSt Looker Studio dashboard remains the canonical **spatial** view across the full BHB span (1450–1991). It is embedded into the Corpus page where relevant and linked throughout.
-
-→ [DiJeSt: Bibliography of the Hebrew Book, visualized](https://datastudio.google.com/u/0/reporting/73a17dcc-f092-4dec-8c57-58b606862b2d/page/FPCXD)
+<p style="text-align: center; color: #6b7280; font-size: 0.9rem; margin-top: 2rem;">
+  Built on the <a href="https://datastudio.google.com/u/0/reporting/73a17dcc-f092-4dec-8c57-58b606862b2d/page/FPCXD">DiJeSt project</a> · BHB data · <a href="https://kima.openmaps.online/">KIMA</a> gazetteer
+</p>
+```

@@ -1,266 +1,291 @@
 ---
 title: "The Corpus"
-subtitle: "BHB at the Margins scope: 1470–1800"
+subtitle: "BHB, 1470–1800"
+toc: false
 ---
 
 ```{=html}
 <script>
-  // Shared data loader. The summary JSON is the source of truth for every chart on this page.
   window.MARGINS_SUMMARY = fetch("../_data/bhb_pre1800_summary.json").then(r => r.json());
+  function placeLabel(s) {
+    const parts = (s || "").split("|");
+    return parts.find(p => /[A-Za-z]/.test(p)) || parts[0] || "";
+  }
 </script>
-```
 
-The Margins proposal defines its corpus as all Hebrew-letter print from the beginnings of the craft to the end of the 18th century — roughly 1470–1800. This page restricts the BHB to that window and surfaces the layers that the existing DiJeSt dashboard does not yet show: a temporal axis, the paratext layer, work-cluster structure, and the Bowers/Gaskell signals that hide in free-text notes.
-
-## Scope & coverage
-
-```{=html}
 <div class="scope-banner">
-  <div class="scope-stat"><div class="n">10,787</div><div class="label">Records in scope</div></div>
-  <div class="scope-stat"><div class="n">1470–1800</div><div class="label">Year range</div></div>
-  <div class="scope-stat"><div class="n">~9,628</div><div class="label">Works (upper bound)</div></div>
+  <div class="scope-stat"><div class="n">10,787</div><div class="label">Records</div></div>
+  <div class="scope-stat"><div class="n">1470–1800</div><div class="label">Years</div></div>
+  <div class="scope-stat"><div class="n">~9,628</div><div class="label">Works (≤)</div></div>
   <div class="scope-stat"><div class="n">205</div><div class="label">Places</div></div>
-  <div class="scope-stat"><div class="n">1,986</div><div class="label">Personal-name authors</div></div>
-  <div class="scope-stat"><div class="n">2,259</div><div class="label">Haskamot (915)</div></div>
-  <div class="scope-stat"><div class="n">5,351</div><div class="label">Chronograms (912)</div></div>
+  <div class="scope-stat"><div class="n">1,986</div><div class="label">Authors</div></div>
+  <div class="scope-stat"><div class="n">2,259</div><div class="label">Haskamot</div></div>
+  <div class="scope-stat"><div class="n">5,351</div><div class="label">Chronograms</div></div>
+  <div class="scope-stat"><div class="n">~18%</div><div class="label">of ~60k target</div></div>
 </div>
-
-<p><strong>Coverage vs. proposal target.</strong> The proposal estimates ~60,000 in-scope titles in the wider bibliographic landscape (Vinograd, Yaari, Heller, incunabula catalogues). What the BHB MARC dump contributes:</p>
-
-<div class="coverage-bar">
-  <div class="fill" style="width: 18%"></div>
-  <div class="label">BHB dump: 10,787 / ~60,000 target ≈ 18%</div>
-</div>
-
-<p class="caption">The other ~82% will be assembled from complementary bibliographies and by Margins itself. See the <a href="../methods/bibliographic_units_and_marc.qmd">methods document, section 10</a>.</p>
 ```
 
-## The print-productivity curve, 1470–1800
+## When
 
 ```{=html}
-<div class="chart">
-  <div id="chart-productivity" style="width: 100%; min-height: 360px;"></div>
-  <div class="caption">Records per decade. Annotations: the <strong>1630s dip</strong> (123 records vs ~200/decade either side) tracks the disruption of central European print during the Thirty Years' War; the <strong>1780s–1790s acceleration</strong> (1.5× and 2.4× the mid-18th-c. baseline) reflects the intensification of Hebrew print in Galicia, Poland and Russia, and motivates the proposal's choice of 1800 as the upper bound.</div>
-</div>
+<div class="chart"><div id="c-productivity" style="width:100%; min-height: 340px;"></div></div>
+<div class="chart"><div id="c-century" style="width:100%; min-height: 220px;"></div></div>
 
 <script>
 window.MARGINS_SUMMARY.then(s => {
-  const data = Object.entries(s.by_decade)
-    .map(([d, n]) => ({decade: +d, n}))
-    .filter(d => d.decade >= 1470 && d.decade <= 1790);
-  const spec = {
+  const dec = Object.entries(s.by_decade).map(([d,n]) => ({decade:+d, n}));
+  vegaEmbed("#c-productivity", {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    width: "container",
-    height: 320,
-    data: { values: data },
-    layer: [
-      { mark: { type: "bar", color: "#7c2d12" },
-        encoding: {
-          x: { field: "decade", type: "ordinal", title: "Decade" },
-          y: { field: "n", type: "quantitative", title: "Records" },
-          tooltip: [{ field: "decade", title: "Decade" }, { field: "n", title: "Records" }]
-        }
-      },
-      { mark: { type: "text", color: "#991b1b", dy: -8, fontWeight: "bold" },
-        data: { values: [
-          { decade: 1630, n: 123, lab: "Thirty Years' War dip" },
-          { decade: 1790, n: 1354, lab: "Late-18c. acceleration" }
-        ]},
-        encoding: {
-          x: { field: "decade", type: "ordinal" },
-          y: { field: "n", type: "quantitative" },
-          text: { field: "lab" }
-        }
-      }
-    ]
-  };
-  vegaEmbed("#chart-productivity", spec, { actions: false });
-});
-</script>
-```
-
-## Paratext intensifies through the early-modern period
-
-The BHB extracts haskama and chronogram statements as their own structured fields (915 and 912). When their coverage is plotted by century, both follow the well-attested historical curve of paratextual intensification:
-
-```{=html}
-<div class="chart">
-  <div id="chart-paratext-growth" style="width: 100%; min-height: 320px;"></div>
-  <div class="caption">Share of in-scope records carrying a structured haskama (rabbinic approbation, MARC 915) or a chronogram (title-page Hebrew-letter date phrase, MARC 912). These are <em>floor</em> percentages — extraction-bounded, not actual-presence-bounded. The 18th-century rates (29% haskamot, 61% chronograms) reflect both the rise of the practices and the depth of BHB cataloguing in that period.</div>
-</div>
-
-<script>
-window.MARGINS_SUMMARY.then(s => {
-  const counts = s.by_century;
-  const rows = [];
-  Object.entries(s.haskama_by_century).forEach(([c, n]) => {
-    rows.push({ century: +c + "c.", kind: "Haskama (915)", pct: 100 * n / counts[c] });
-  });
-  Object.entries(s.chronogram_by_century).forEach(([c, n]) => {
-    rows.push({ century: +c + "c.", kind: "Chronogram (912)", pct: 100 * n / counts[c] });
-  });
-  const spec = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    width: "container",
-    height: 280,
-    data: { values: rows },
-    mark: { type: "bar" },
+    width: "container", height: 320,
+    title: "Records per decade",
+    data: { values: dec },
+    mark: { type: "bar", color: "#7c2d12" },
     encoding: {
-      x: { field: "century", type: "ordinal", title: "Century" },
-      xOffset: { field: "kind" },
-      y: { field: "pct", type: "quantitative", title: "% of records in century", scale: { domain: [0, 70] } },
-      color: { field: "kind", scale: { range: ["#7c2d12", "#0e7490"] }, title: "Paratext field" },
-      tooltip: [
-        { field: "century", title: "Century" },
-        { field: "kind", title: "Field" },
-        { field: "pct", title: "% of records", format: ".1f" }
-      ]
+      x: { field: "decade", type: "ordinal", title: null },
+      y: { field: "n", type: "quantitative", title: null },
+      tooltip: [{field:"decade"}, {field:"n", title:"Records"}]
     }
-  };
-  vegaEmbed("#chart-paratext-growth", spec, { actions: false });
+  }, {actions:false});
+
+  const cent = Object.entries(s.by_century).map(([c,n]) => ({century:+c+"c.", n}));
+  vegaEmbed("#c-century", {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container", height: 180,
+    title: "Records per century",
+    data: { values: cent },
+    mark: { type: "bar", color: "#7c2d12" },
+    encoding: {
+      x: { field: "n", type: "quantitative", title: null },
+      y: { field: "century", type: "nominal", title: null, sort: null },
+      tooltip: [{field:"century"}, {field:"n", title:"Records"}]
+    }
+  }, {actions:false});
 });
 </script>
 ```
 
-## The early-modern Hebrew print map
-
-The DiJeSt dashboard's all-corpus map is dominated by Tel Aviv, Jerusalem, Warsaw, New York. Restricted to the Margins window (1470–1800), the geography is completely different — the classical centres of early-modern Hebrew print emerge:
+## Where
 
 ```{=html}
-<div class="chart">
-  <div id="chart-places" style="width: 100%; min-height: 340px;"></div>
-  <div class="caption">Top 12 in-scope places by record count. Venice and Amsterdam together account for ~27% of in-scope output. Place labels normalised across <code>Hebrew|Latin</code> ordering. See the <a href="../methods/bibliographic_units_and_marc.qmd">methods document, sections 9.4 and 10.2</a> for caveats on the 922/923 publisher/printer authority columns.</div>
-</div>
+<div class="chart"><div id="c-places" style="width:100%; min-height: 360px;"></div></div>
+<div class="chart"><div id="c-place-decade" style="width:100%; min-height: 420px;"></div></div>
 
 <script>
 window.MARGINS_SUMMARY.then(s => {
-  const top12 = s.top_places.slice(0, 12).map(([place, n]) => {
-    const parts = place.split("|");
-    const label = parts.find(p => /[A-Za-z]/.test(p)) || parts[0];
-    return { place: label, place_full: place, n };
-  });
-  const spec = {
+  const top12 = s.top_places.slice(0,12).map(([p,n]) => ({place: placeLabel(p), n}));
+  vegaEmbed("#c-places", {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    width: "container",
-    height: 320,
+    width: "container", height: 340,
+    title: "Top 12 places of publication",
     data: { values: top12 },
     mark: { type: "bar", color: "#0e7490" },
     encoding: {
       y: { field: "place", type: "nominal", sort: "-x", title: null },
-      x: { field: "n", type: "quantitative", title: "Records in scope" },
-      tooltip: [
-        { field: "place_full", title: "Place" },
-        { field: "n", title: "Records" }
-      ]
+      x: { field: "n", type: "quantitative", title: null },
+      tooltip: [{field:"place"}, {field:"n", title:"Records"}]
     }
-  };
-  vegaEmbed("#chart-places", spec, { actions: false });
+  }, {actions:false});
+
+  const heat = s.decade_place_top12.map(r => ({decade: r.decade, place: placeLabel(r.place), n: r.n}));
+  vegaEmbed("#c-place-decade", {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container", height: 400,
+    title: "Decade × place (top 12)",
+    data: { values: heat },
+    mark: "rect",
+    encoding: {
+      x: { field: "decade", type: "ordinal", title: null },
+      y: { field: "place", type: "nominal", title: null, sort: "-x" },
+      color: { field: "n", type: "quantitative", scale: { scheme: "oranges" }, title: "Records" },
+      tooltip: [{field:"place"}, {field:"decade"}, {field:"n", title:"Records"}]
+    }
+  }, {actions:false});
 });
 </script>
 ```
 
-### Embedded DiJeSt spatial view (for global context)
-
-The DiJeSt dashboard remains the canonical interactive map across the full BHB span. Embedded here for cross-reference:
+## Who
 
 ```{=html}
-<iframe class="dijest-iframe"
-        src="https://datastudio.google.com/embed/u/0/reporting/73a17dcc-f092-4dec-8c57-58b606862b2d/page/FPCXD"
-        height="640"
-        allowfullscreen></iframe>
-```
-
-## Most-republished Works in scope
-
-Work-clusters are surfaced by the MARC 130 uniform-title field. Below: in-scope Works with the most Manifestations. Liturgical aggregations dominate, which is itself a finding — the BHB clusters individual liturgical printings under generic uniform titles (`תפילות. שונות.`) rather than treating each as a distinct Work.
-
-```{=html}
-<div class="chart">
-  <div id="chart-works" style="width: 100%; min-height: 340px;"></div>
-  <div class="caption">In-scope Manifestations grouped by MARC 130 uniform title. 3,572 distinct uniform titles in scope; 4,731 records carry a 130 (the remaining 6,056 are presumed single-Manifestation Works).</div>
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+  <div class="chart"><div id="c-authors" style="width:100%; min-height: 360px;"></div></div>
+  <div class="chart"><div id="c-works" style="width:100%; min-height: 360px;"></div></div>
 </div>
 
 <script>
 window.MARGINS_SUMMARY.then(s => {
-  const top = s.top_works.slice(0, 10).map(([w, n]) => ({ work: w, n }));
-  const spec = {
+  const auth = s.top_authors.slice(0,10).map(([a,n]) => ({author:a, n}));
+  vegaEmbed("#c-authors", {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    width: "container",
-    height: 300,
-    data: { values: top },
+    width: "container", height: 340,
+    title: "Top 10 authors (MARC 100)",
+    data: { values: auth },
     mark: { type: "bar", color: "#7c2d12" },
     encoding: {
-      y: { field: "work", type: "nominal", sort: "-x", title: null, axis: { labelLimit: 280 } },
-      x: { field: "n", type: "quantitative", title: "Manifestations in scope" },
-      tooltip: [{ field: "work" }, { field: "n", title: "Manifestations" }]
+      y: { field: "author", type: "nominal", sort: "-x", title: null, axis: {labelLimit: 260} },
+      x: { field: "n", type: "quantitative", title: null },
+      tooltip: [{field:"author"}, {field:"n", title:"Records"}]
     }
-  };
-  vegaEmbed("#chart-works", spec, { actions: false });
+  }, {actions:false});
+
+  const works = s.top_works.slice(0,10).map(([w,n]) => ({work:w, n}));
+  vegaEmbed("#c-works", {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container", height: 340,
+    title: "Top 10 Works (MARC 130 uniform titles)",
+    data: { values: works },
+    mark: { type: "bar", color: "#0e7490" },
+    encoding: {
+      y: { field: "work", type: "nominal", sort: "-x", title: null, axis: {labelLimit: 260} },
+      x: { field: "n", type: "quantitative", title: null },
+      tooltip: [{field:"work"}, {field:"n", title:"Manifestations"}]
+    }
+  }, {actions:false});
+});
+</script>
+```
+
+## What
+
+```{=html}
+<div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+  <div class="chart"><div id="c-langs" style="width:100%; min-height: 320px;"></div></div>
+  <div class="chart"><div id="c-types" style="width:100%; min-height: 320px;"></div></div>
+  <div class="chart"><div id="c-genres" style="width:100%; min-height: 320px;"></div></div>
+</div>
+
+<script>
+window.MARGINS_SUMMARY.then(s => {
+  const langMap = {heb:"Hebrew", yid:"Yiddish", lad:"Ladino", lat:"Latin", ger:"German",
+                   eng:"English", ita:"Italian", ara:"Arabic", arc:"Aramaic",
+                   jrb:"Judeo-Arabic", ghb:"Judeo-Arabic (ghb)", spa:"Spanish",
+                   fre:"French", pol:"Polish", dut:"Dutch"};
+  const langs = s.top_languages.slice(0,8).map(([l,n]) => ({lang: langMap[l] || l, n}));
+  vegaEmbed("#c-langs", {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container", height: 300,
+    title: "Language (MARC 041)",
+    data: { values: langs },
+    mark: { type: "bar", color: "#1d4ed8" },
+    encoding: {
+      y: { field: "lang", type: "nominal", sort: "-x", title: null },
+      x: { field: "n", type: "quantitative", title: null },
+      tooltip: [{field:"lang"}, {field:"n"}]
+    }
+  }, {actions:false});
+
+  const types = s.top_types.slice(0,8).map(([t,n]) => ({type:t, n}));
+  vegaEmbed("#c-types", {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container", height: 300,
+    title: "Type (MARC 901)",
+    data: { values: types },
+    mark: { type: "bar", color: "#0e7490" },
+    encoding: {
+      y: { field: "type", type: "nominal", sort: "-x", title: null, axis: {labelLimit: 200} },
+      x: { field: "n", type: "quantitative", title: null },
+      tooltip: [{field:"type"}, {field:"n"}]
+    }
+  }, {actions:false});
+
+  const genres = s.top_genres.slice(0,8).map(([g,n]) => ({genre:g, n}));
+  vegaEmbed("#c-genres", {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container", height: 300,
+    title: "Genre (MARC 690)",
+    data: { values: genres },
+    mark: { type: "bar", color: "#7c2d12" },
+    encoding: {
+      y: { field: "genre", type: "nominal", sort: "-x", title: null, axis: {labelLimit: 200} },
+      x: { field: "n", type: "quantitative", title: null },
+      tooltip: [{field:"genre"}, {field:"n"}]
+    }
+  }, {actions:false});
+});
+</script>
+```
+
+## Paratext
+
+```{=html}
+<div class="chart"><div id="c-paratext-time" style="width:100%; min-height: 340px;"></div></div>
+<div class="chart"><div id="c-paratext-pct" style="width:100%; min-height: 280px;"></div></div>
+
+<script>
+window.MARGINS_SUMMARY.then(s => {
+  const rows = [];
+  Object.entries(s.haskama_by_decade).forEach(([d,n]) => rows.push({decade:+d, kind:"Haskama (915)", n}));
+  Object.entries(s.chronogram_by_decade).forEach(([d,n]) => rows.push({decade:+d, kind:"Chronogram (912)", n}));
+  vegaEmbed("#c-paratext-time", {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container", height: 320,
+    title: "Haskamot and chronograms per decade",
+    data: { values: rows },
+    mark: { type: "line", point: true, strokeWidth: 2 },
+    encoding: {
+      x: { field: "decade", type: "ordinal", title: null },
+      y: { field: "n", type: "quantitative", title: null },
+      color: { field: "kind", scale: { range: ["#7c2d12","#0e7490"] }, title: null },
+      tooltip: [{field:"decade"}, {field:"kind"}, {field:"n"}]
+    }
+  }, {actions:false});
+
+  const totals = s.by_century;
+  const pct = [];
+  Object.entries(s.haskama_by_century).forEach(([c,n]) => pct.push({century:c+"c.", kind:"Haskama (915)", pct: 100*n/totals[c]}));
+  Object.entries(s.chronogram_by_century).forEach(([c,n]) => pct.push({century:c+"c.", kind:"Chronogram (912)", pct: 100*n/totals[c]}));
+  vegaEmbed("#c-paratext-pct", {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container", height: 260,
+    title: "Paratext share of records, by century",
+    data: { values: pct },
+    mark: { type: "bar" },
+    encoding: {
+      x: { field: "century", type: "ordinal", title: null },
+      xOffset: { field: "kind" },
+      y: { field: "pct", type: "quantitative", title: "%", scale: {domain: [0,70]} },
+      color: { field: "kind", scale: { range: ["#7c2d12","#0e7490"] }, title: null },
+      tooltip: [{field:"century"}, {field:"kind"}, {field:"pct", format:".1f"}]
+    }
+  }, {actions:false});
 });
 </script>
 ```
 
 ## Bowers/Gaskell signals in free-text notes
 
-A regex pass over the MARC 500 General Note column, using the **scope-marker + verb + unit** grammar described in the [methods document, section 7](../methods/bibliographic_units_and_marc.qmd#what-bowersgaskell-distinctions-look-like-in-bhb-free-text), surfaces records whose notes describe Bowers-level distinctions — issues, states, cancels, variants, separate impressions:
-
 ```{=html}
-<div class="signal-grammar">
-  <strong>The grammar:</strong>
-  <span class="he">{ בחלק מהעותקים | יש טפסים | במקביל | בעותק זה }</span>
-  + <span class="he">{ הוחלף | נשמט | הושמט | נדפס מחדש | הוסף }</span>
-  + <span class="he">{ שער | דף | קונטרס | הקדמה | הסכמה | תשובה | נייר }</span>
-  <br><em>scope-marker + verb of replacement/omission/reprinting + structural unit</em>
-</div>
-
-<div class="chart">
-  <div id="chart-signals" style="width: 100%; min-height: 320px;"></div>
-  <div class="caption">~900 records (~8.3% of in-scope) carry at least one Bowers-flavoured signal in their 500-note. This is a <em>floor</em> count of records <em>describable</em> with Bowers vocabulary, not a population count of the underlying phenomena. Promoting these to structured <code>paratext_events</code> is desideratum #1 — see the <a href="../desiderata/index.qmd">Desiderata page</a>.</div>
-</div>
+<div class="chart"><div id="c-signals" style="width:100%; min-height: 320px;"></div></div>
+<p style="text-align:center; color:#6b7280; font-size:0.85rem;">~908 records (8.4% of in-scope) carry at least one signal in MARC 500. <a href="../methods/bibliographic_units_and_marc.html#what-bowersgaskell-distinctions-look-like-in-bhb-free-text">grammar &amp; examples →</a></p>
 
 <script>
 window.MARGINS_SUMMARY.then(s => {
-  const labels = {
-    state: "State (in some copies)",
-    variant_copies: "Variant copies exist",
-    issue: "Issue (new title page)",
-    cancel: "Cancel leaf",
-    impression: "Impression / reprint",
-    replacement: "Replacement (any unit)",
-    variant_text: "Variant text",
-    forged: "Forged / fake imprint",
-    omission: "Omission / suppression"
-  };
-  const data = Object.entries(s.signals_by_kind).map(([k, n]) => ({
-    kind: labels[k] || k, n
-  }));
-  const spec = {
+  const labels = {state:"State (in some copies)", variant_copies:"Variant copies exist",
+    issue:"Issue (new title page)", cancel:"Cancel leaf",
+    impression:"Impression / reprint", replacement:"Replacement",
+    variant_text:"Variant text", forged:"Forged imprint",
+    omission:"Omission / suppression"};
+  const data = Object.entries(s.signals_by_kind).map(([k,n]) => ({kind: labels[k]||k, n}));
+  vegaEmbed("#c-signals", {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    width: "container",
-    height: 280,
+    width: "container", height: 300,
     data: { values: data },
     mark: { type: "bar", color: "#ea580c" },
     encoding: {
-      y: { field: "kind", type: "nominal", sort: "-x", title: null, axis: { labelLimit: 240 } },
-      x: { field: "n", type: "quantitative", title: "Records (in scope)" },
-      tooltip: [{ field: "kind" }, { field: "n", title: "Records" }]
+      y: { field: "kind", type: "nominal", sort: "-x", title: null, axis: {labelLimit: 240} },
+      x: { field: "n", type: "quantitative", title: null },
+      tooltip: [{field:"kind"}, {field:"n"}]
     }
-  };
-  vegaEmbed("#chart-signals", spec, { actions: false });
+  }, {actions:false});
 });
 </script>
 ```
 
-## Caveats
-
-The DiJeSt dashboard already articulates three caveats: uneven survival of Hebrew print, project-defined cataloguing choices, and semi-automatic place-name processing. Margins's reading of the same data adds three **structural** caveats specific to the in-scope window:
+## Geography (DiJeSt full-corpus reference)
 
 ```{=html}
-<div class="caveat"><strong>922 (controlled publisher)</strong> is essentially empty in scope — only 20 records carry it. Any in-scope "count of publishers" must be reconstructed from the transcribed 260b column or built fresh.</div>
-
-<div class="caveat"><strong>923 (controlled printer)</strong> is populated for ~5% of in-scope records (506 rows) and barely deduplicated — 353 distinct values from 506 populated records means orthographic and transliteration variants are not collapsed. Treat printer counts as noisy upper bounds.</div>
-
-<div class="caveat"><strong>533 / 535 (reproduction / originals location)</strong> are negligible in scope (20 / 2,387) — those fields predominantly serve 19th-/20th-century cataloguing and are not a useful Item-level signal for the Margins window.</div>
+<iframe class="dijest-iframe"
+        src="https://datastudio.google.com/embed/u/0/reporting/73a17dcc-f092-4dec-8c57-58b606862b2d/page/FPCXD"
+        height="600"
+        allowfullscreen></iframe>
 ```
-
-These caveats motivate desiderata #5 (printer authority) and #7 (Item-level data integration) on the [Desiderata page](../desiderata/index.qmd).

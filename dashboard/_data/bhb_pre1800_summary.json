@@ -56,12 +56,79 @@
     "17": 330,
     "18": 1908
   },
+  "haskama_by_decade": {
+    "1490": 1,
+    "1510": 1,
+    "1540": 2,
+    "1550": 1,
+    "1560": 2,
+    "1570": 2,
+    "1580": 3,
+    "1590": 8,
+    "1600": 20,
+    "1610": 36,
+    "1620": 18,
+    "1630": 12,
+    "1640": 28,
+    "1650": 15,
+    "1660": 22,
+    "1670": 21,
+    "1680": 44,
+    "1690": 103,
+    "1700": 122,
+    "1710": 157,
+    "1720": 143,
+    "1730": 181,
+    "1740": 144,
+    "1750": 148,
+    "1760": 244,
+    "1770": 164,
+    "1780": 230,
+    "1790": 355,
+    "1800": 32
+  },
   "chronogram_total": 5351,
   "chronogram_by_century": {
     "15": 24,
     "16": 415,
     "17": 847,
     "18": 4065
+  },
+  "chronogram_by_decade": {
+    "1470": 1,
+    "1480": 13,
+    "1490": 10,
+    "1500": 2,
+    "1510": 36,
+    "1520": 15,
+    "1530": 10,
+    "1540": 31,
+    "1550": 63,
+    "1560": 24,
+    "1570": 27,
+    "1580": 57,
+    "1590": 132,
+    "1600": 74,
+    "1610": 75,
+    "1620": 50,
+    "1630": 33,
+    "1640": 76,
+    "1650": 88,
+    "1660": 87,
+    "1670": 81,
+    "1680": 107,
+    "1690": 177,
+    "1700": 196,
+    "1710": 326,
+    "1720": 342,
+    "1730": 375,
+    "1740": 339,
+    "1750": 356,
+    "1760": 416,
+    "1770": 380,
+    "1780": 527,
+    "1790": 758,
+    "1800": 67
   },
   "signals_by_kind": {
     "omission": 708,
@@ -319,6 +386,192 @@
     [
       "שלמה בן יצחק (רש\"י).",
       29
+    ]
+  ],
+  "top_types": [
+    [
+      "ספר",
+      3598
+    ],
+    [
+      "סדר",
+      432
+    ],
+    [
+      "זה ספר",
+      66
+    ],
+    [
+      "...",
+      65
+    ],
+    [
+      "... ספר",
+      38
+    ],
+    [
+      "זה",
+      23
+    ],
+    [
+      "זבחו זבחי צדק",
+      22
+    ],
+    [
+      "...ספר",
+      15
+    ],
+    [
+      "ספר שאלות ותשובות",
+      14
+    ],
+    [
+      "זה הספר",
+      10
+    ],
+    [
+      "שפר",
+      10
+    ],
+    [
+      "חלק ראשון מספר",
+      9
+    ],
+    [
+      "מאמר",
+      8
+    ],
+    [
+      "זאת",
+      8
+    ],
+    [
+      "ספר ...",
+      7
+    ]
+  ],
+  "top_genres": [
+    [
+      "מקרא",
+      57
+    ],
+    [
+      "ליטורגיה (תרגום)",
+      54
+    ],
+    [
+      "שירה (מקור)",
+      25
+    ],
+    [
+      "ליטורגיה",
+      24
+    ],
+    [
+      "הגדה של פסח",
+      16
+    ],
+    [
+      "ליטורגיה (מקור)",
+      12
+    ],
+    [
+      "אבות",
+      8
+    ],
+    [
+      "מוסר (תרגום)",
+      7
+    ],
+    [
+      "פיוט (מקור)",
+      4
+    ],
+    [
+      "הלכה ומנהג (תרגום)",
+      4
+    ],
+    [
+      "פיוט (תרגום)",
+      3
+    ],
+    [
+      "מוסר (מקור)",
+      3
+    ],
+    [
+      "ספרות חז\"ל",
+      3
+    ],
+    [
+      "פולקלור (תרגום)",
+      3
+    ],
+    [
+      "פיוט (מקור)|מוסר (מקור)",
+      3
+    ]
+  ],
+  "top_languages": [
+    [
+      "heb",
+      10450
+    ],
+    [
+      "yid",
+      122
+    ],
+    [
+      "lad",
+      85
+    ],
+    [
+      "lat",
+      48
+    ],
+    [
+      "arc",
+      15
+    ],
+    [
+      "ita",
+      15
+    ],
+    [
+      "jit",
+      13
+    ],
+    [
+      "ghb",
+      9
+    ],
+    [
+      "ger",
+      8
+    ],
+    [
+      "syr",
+      7
+    ],
+    [
+      "eng",
+      4
+    ],
+    [
+      "grc",
+      3
+    ],
+    [
+      "spa",
+      3
+    ],
+    [
+      "dut",
+      1
+    ],
+    [
+      "hta",
+      1
     ]
   ],
   "haskama_decade_place": [
@@ -4452,6 +4705,1193 @@
     {
       "decade": 1670,
       "place": "Leipzig|ליפציג",
+      "n": 1
+    }
+  ],
+  "decade_place_top12": [
+    {
+      "decade": 1780,
+      "place": "Mantua|מנטובה",
+      "n": 54
+    },
+    {
+      "decade": 1510,
+      "place": "Istanbul|קושטא",
+      "n": 75
+    },
+    {
+      "decade": 1540,
+      "place": "Venice|ונציה",
+      "n": 100
+    },
+    {
+      "decade": 1560,
+      "place": "Venice|ונציה",
+      "n": 58
+    },
+    {
+      "decade": 1720,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 125
+    },
+    {
+      "decade": 1780,
+      "place": "Prague|פרג",
+      "n": 49
+    },
+    {
+      "decade": 1560,
+      "place": "Mantua|מנטובה",
+      "n": 41
+    },
+    {
+      "decade": 1580,
+      "place": "Mantua|מנטובה",
+      "n": 12
+    },
+    {
+      "decade": 1590,
+      "place": "Venice|ונציה",
+      "n": 118
+    },
+    {
+      "decade": 1620,
+      "place": "Venice|ונציה",
+      "n": 46
+    },
+    {
+      "decade": 1680,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 27
+    },
+    {
+      "decade": 1700,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 113
+    },
+    {
+      "decade": 1720,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 43
+    },
+    {
+      "decade": 1730,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 116
+    },
+    {
+      "decade": 1740,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 10
+    },
+    {
+      "decade": 1760,
+      "place": "Fuerth|פירט",
+      "n": 102
+    },
+    {
+      "decade": 1780,
+      "place": "Fuerth|פירט",
+      "n": 59
+    },
+    {
+      "decade": 1530,
+      "place": "Istanbul|קושטא",
+      "n": 24
+    },
+    {
+      "decade": 1700,
+      "place": "Venice|ונציה",
+      "n": 71
+    },
+    {
+      "decade": 1630,
+      "place": "Prague|פרג",
+      "n": 3
+    },
+    {
+      "decade": 1790,
+      "place": "Livorno|ליוורנו",
+      "n": 153
+    },
+    {
+      "decade": 1790,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 67
+    },
+    {
+      "decade": 1760,
+      "place": "Berlin|ברלין",
+      "n": 40
+    },
+    {
+      "decade": 1710,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 144
+    },
+    {
+      "decade": 1520,
+      "place": "Venice|ונציה",
+      "n": 41
+    },
+    {
+      "decade": 1750,
+      "place": "Fuerth|פירט",
+      "n": 30
+    },
+    {
+      "decade": 1710,
+      "place": "Istanbul|קושטא",
+      "n": 23
+    },
+    {
+      "decade": 1730,
+      "place": "Berlin|ברלין",
+      "n": 13
+    },
+    {
+      "decade": 1730,
+      "place": "Prague|פרג",
+      "n": 12
+    },
+    {
+      "decade": 1720,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 8
+    },
+    {
+      "decade": 1720,
+      "place": "Istanbul|קושטא",
+      "n": 26
+    },
+    {
+      "decade": 1750,
+      "place": "Berlin|ברלין",
+      "n": 16
+    },
+    {
+      "decade": 1600,
+      "place": "Venice|ונציה",
+      "n": 138
+    },
+    {
+      "decade": 1770,
+      "place": "Livorno|ליוורנו",
+      "n": 36
+    },
+    {
+      "decade": 1510,
+      "place": "Venice|ונציה",
+      "n": 14
+    },
+    {
+      "decade": 1790,
+      "place": "Zholkva|זולקוה",
+      "n": 68
+    },
+    {
+      "decade": 1650,
+      "place": "Livorno|ליוורנו",
+      "n": 8
+    },
+    {
+      "decade": 1770,
+      "place": "Berlin|ברלין",
+      "n": 33
+    },
+    {
+      "decade": 1580,
+      "place": "Istanbul|קושטא",
+      "n": 15
+    },
+    {
+      "decade": 1520,
+      "place": "Istanbul|קושטא",
+      "n": 13
+    },
+    {
+      "decade": 1550,
+      "place": "Istanbul|קושטא",
+      "n": 10
+    },
+    {
+      "decade": 1550,
+      "place": "Mantua|מנטובה",
+      "n": 29
+    },
+    {
+      "decade": 1590,
+      "place": "Cracow|קרקוב",
+      "n": 63
+    },
+    {
+      "decade": 1750,
+      "place": "Zholkva|זולקוה",
+      "n": 72
+    },
+    {
+      "decade": 1760,
+      "place": "Zholkva|זולקוה",
+      "n": 63
+    },
+    {
+      "decade": 1760,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 161
+    },
+    {
+      "decade": 1770,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 67
+    },
+    {
+      "decade": 1660,
+      "place": "Venice|ונציה",
+      "n": 34
+    },
+    {
+      "decade": 1650,
+      "place": "Venice|ונציה",
+      "n": 39
+    },
+    {
+      "decade": 1780,
+      "place": "Zholkva|זולקוה",
+      "n": 34
+    },
+    {
+      "decade": 1570,
+      "place": "Cracow|קרקוב",
+      "n": 24
+    },
+    {
+      "decade": 1560,
+      "place": "Istanbul|קושטא",
+      "n": 19
+    },
+    {
+      "decade": 1580,
+      "place": "Cracow|קרקוב",
+      "n": 44
+    },
+    {
+      "decade": 1570,
+      "place": "Venice|ונציה",
+      "n": 46
+    },
+    {
+      "decade": 1750,
+      "place": "Istanbul|קושטא",
+      "n": 23
+    },
+    {
+      "decade": 1560,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 21
+    },
+    {
+      "decade": 1650,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 56
+    },
+    {
+      "decade": 1640,
+      "place": "Venice|ונציה",
+      "n": 42
+    },
+    {
+      "decade": 1690,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 55
+    },
+    {
+      "decade": 1740,
+      "place": "Fuerth|פירט",
+      "n": 37
+    },
+    {
+      "decade": 1770,
+      "place": "Venice|ונציה",
+      "n": 38
+    },
+    {
+      "decade": 1790,
+      "place": "Fuerth|פירט",
+      "n": 51
+    },
+    {
+      "decade": 1730,
+      "place": "Istanbul|קושטא",
+      "n": 51
+    },
+    {
+      "decade": 1620,
+      "place": "Istanbul|קושטא",
+      "n": 1
+    },
+    {
+      "decade": 1630,
+      "place": "Venice|ונציה",
+      "n": 36
+    },
+    {
+      "decade": 1710,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 47
+    },
+    {
+      "decade": 1610,
+      "place": "Istanbul|קושטא",
+      "n": 1
+    },
+    {
+      "decade": 1760,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 8
+    },
+    {
+      "decade": 1770,
+      "place": "Zholkva|זולקוה",
+      "n": 68
+    },
+    {
+      "decade": 1540,
+      "place": "Istanbul|קושטא",
+      "n": 23
+    },
+    {
+      "decade": 1580,
+      "place": "Venice|ונציה",
+      "n": 62
+    },
+    {
+      "decade": 1500,
+      "place": "Istanbul|קושטא",
+      "n": 7
+    },
+    {
+      "decade": 1760,
+      "place": "Venice|ונציה",
+      "n": 40
+    },
+    {
+      "decade": 1690,
+      "place": "Fuerth|פירט",
+      "n": 29
+    },
+    {
+      "decade": 1710,
+      "place": "Berlin|ברלין",
+      "n": 25
+    },
+    {
+      "decade": 1550,
+      "place": "Venice|ונציה",
+      "n": 34
+    },
+    {
+      "decade": 1660,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 59
+    },
+    {
+      "decade": 1680,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 53
+    },
+    {
+      "decade": 1800,
+      "place": "Livorno|ליוורנו",
+      "n": 25
+    },
+    {
+      "decade": 1780,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 55
+    },
+    {
+      "decade": 1600,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 14
+    },
+    {
+      "decade": 1690,
+      "place": "Berlin|ברלין",
+      "n": 6
+    },
+    {
+      "decade": 1610,
+      "place": "Prague|פרג",
+      "n": 70
+    },
+    {
+      "decade": 1780,
+      "place": "Livorno|ליוורנו",
+      "n": 94
+    },
+    {
+      "decade": 1730,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 6
+    },
+    {
+      "decade": 1750,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 31
+    },
+    {
+      "decade": 1750,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 103
+    },
+    {
+      "decade": 1520,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 18
+    },
+    {
+      "decade": 1590,
+      "place": "Prague|פרג",
+      "n": 30
+    },
+    {
+      "decade": 1640,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 50
+    },
+    {
+      "decade": 1740,
+      "place": "Venice|ונציה",
+      "n": 110
+    },
+    {
+      "decade": 1790,
+      "place": "Prague|פרג",
+      "n": 40
+    },
+    {
+      "decade": 1740,
+      "place": "Istanbul|קושטא",
+      "n": 47
+    },
+    {
+      "decade": 1720,
+      "place": "Venice|ונציה",
+      "n": 25
+    },
+    {
+      "decade": 1710,
+      "place": "Venice|ונציה",
+      "n": 58
+    },
+    {
+      "decade": 1720,
+      "place": "Zholkva|זולקוה",
+      "n": 13
+    },
+    {
+      "decade": 1590,
+      "place": "Istanbul|קושטא",
+      "n": 14
+    },
+    {
+      "decade": 1580,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 10
+    },
+    {
+      "decade": 1700,
+      "place": "Zholkva|זולקוה",
+      "n": 1
+    },
+    {
+      "decade": 1790,
+      "place": "Venice|ונציה",
+      "n": 63
+    },
+    {
+      "decade": 1800,
+      "place": "Zholkva|זולקוה",
+      "n": 18
+    },
+    {
+      "decade": 1720,
+      "place": "Prague|פרג",
+      "n": 11
+    },
+    {
+      "decade": 1640,
+      "place": "Cracow|קרקוב",
+      "n": 38
+    },
+    {
+      "decade": 1620,
+      "place": "Mantua|מנטובה",
+      "n": 21
+    },
+    {
+      "decade": 1730,
+      "place": "Mantua|מנטובה",
+      "n": 34
+    },
+    {
+      "decade": 1740,
+      "place": "Mantua|מנטובה",
+      "n": 37
+    },
+    {
+      "decade": 1760,
+      "place": "Mantua|מנטובה",
+      "n": 5
+    },
+    {
+      "decade": 1630,
+      "place": "Cracow|קרקוב",
+      "n": 25
+    },
+    {
+      "decade": 1770,
+      "place": "Fuerth|פירט",
+      "n": 48
+    },
+    {
+      "decade": 1690,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 32
+    },
+    {
+      "decade": 1680,
+      "place": "Venice|ונציה",
+      "n": 18
+    },
+    {
+      "decade": 1670,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 40
+    },
+    {
+      "decade": 1730,
+      "place": "Zholkva|זולקוה",
+      "n": 30
+    },
+    {
+      "decade": 1670,
+      "place": "Prague|פרג",
+      "n": 17
+    },
+    {
+      "decade": 1650,
+      "place": "Mantua|מנטובה",
+      "n": 15
+    },
+    {
+      "decade": 1770,
+      "place": "Mantua|מנטובה",
+      "n": 35
+    },
+    {
+      "decade": 1670,
+      "place": "Mantua|מנטובה",
+      "n": 17
+    },
+    {
+      "decade": 1790,
+      "place": "Berlin|ברלין",
+      "n": 54
+    },
+    {
+      "decade": 1760,
+      "place": "Prague|פרג",
+      "n": 11
+    },
+    {
+      "decade": 1770,
+      "place": "Prague|פרג",
+      "n": 16
+    },
+    {
+      "decade": 1780,
+      "place": "Berlin|ברלין",
+      "n": 70
+    },
+    {
+      "decade": 1650,
+      "place": "Istanbul|קושטא",
+      "n": 5
+    },
+    {
+      "decade": 1720,
+      "place": "Fuerth|פירט",
+      "n": 24
+    },
+    {
+      "decade": 1610,
+      "place": "Venice|ונציה",
+      "n": 51
+    },
+    {
+      "decade": 1700,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 33
+    },
+    {
+      "decade": 1620,
+      "place": "Prague|פרג",
+      "n": 28
+    },
+    {
+      "decade": 1680,
+      "place": "Prague|פרג",
+      "n": 47
+    },
+    {
+      "decade": 1560,
+      "place": "Cracow|קרקוב",
+      "n": 5
+    },
+    {
+      "decade": 1600,
+      "place": "Cracow|קרקוב",
+      "n": 23
+    },
+    {
+      "decade": 1570,
+      "place": "Prague|פרג",
+      "n": 3
+    },
+    {
+      "decade": 1740,
+      "place": "Livorno|ליוורנו",
+      "n": 27
+    },
+    {
+      "decade": 1770,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 33
+    },
+    {
+      "decade": 1760,
+      "place": "Istanbul|קושטא",
+      "n": 25
+    },
+    {
+      "decade": 1640,
+      "place": "Istanbul|קושטא",
+      "n": 8
+    },
+    {
+      "decade": 1680,
+      "place": "Istanbul|קושטא",
+      "n": 1
+    },
+    {
+      "decade": 1660,
+      "place": "Istanbul|קושטא",
+      "n": 8
+    },
+    {
+      "decade": 1650,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 11
+    },
+    {
+      "decade": 1620,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 9
+    },
+    {
+      "decade": 1570,
+      "place": "Istanbul|קושטא",
+      "n": 19
+    },
+    {
+      "decade": 1730,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 8
+    },
+    {
+      "decade": 1740,
+      "place": "Zholkva|זולקוה",
+      "n": 50
+    },
+    {
+      "decade": 1530,
+      "place": "Venice|ונציה",
+      "n": 11
+    },
+    {
+      "decade": 1600,
+      "place": "Prague|פרג",
+      "n": 50
+    },
+    {
+      "decade": 1750,
+      "place": "Prague|פרג",
+      "n": 8
+    },
+    {
+      "decade": 1730,
+      "place": "Fuerth|פירט",
+      "n": 18
+    },
+    {
+      "decade": 1760,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 20
+    },
+    {
+      "decade": 1630,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 16
+    },
+    {
+      "decade": 1780,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 21
+    },
+    {
+      "decade": 1650,
+      "place": "Prague|פרג",
+      "n": 14
+    },
+    {
+      "decade": 1700,
+      "place": "Fuerth|פירט",
+      "n": 5
+    },
+    {
+      "decade": 1710,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 7
+    },
+    {
+      "decade": 1610,
+      "place": "Cracow|קרקוב",
+      "n": 29
+    },
+    {
+      "decade": 1730,
+      "place": "Venice|ונציה",
+      "n": 68
+    },
+    {
+      "decade": 1670,
+      "place": "Venice|ונציה",
+      "n": 24
+    },
+    {
+      "decade": 1570,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 10
+    },
+    {
+      "decade": 1580,
+      "place": "Prague|פרג",
+      "n": 13
+    },
+    {
+      "decade": 1740,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 19
+    },
+    {
+      "decade": 1740,
+      "place": "Berlin|ברלין",
+      "n": 11
+    },
+    {
+      "decade": 1530,
+      "place": "Cracow|קרקוב",
+      "n": 8
+    },
+    {
+      "decade": 1700,
+      "place": "Prague|פרג",
+      "n": 45
+    },
+    {
+      "decade": 1750,
+      "place": "Mantua|מנטובה",
+      "n": 19
+    },
+    {
+      "decade": 1750,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 2
+    },
+    {
+      "decade": 1600,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 7
+    },
+    {
+      "decade": 1690,
+      "place": "Venice|ונציה",
+      "n": 59
+    },
+    {
+      "decade": 1650,
+      "place": "Cracow|קרקוב",
+      "n": 11
+    },
+    {
+      "decade": 1720,
+      "place": "Mantua|מנטובה",
+      "n": 38
+    },
+    {
+      "decade": 1740,
+      "place": "Prague|פרג",
+      "n": 1
+    },
+    {
+      "decade": 1660,
+      "place": "Prague|פרג",
+      "n": 26
+    },
+    {
+      "decade": 1790,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 48
+    },
+    {
+      "decade": 1690,
+      "place": "Mantua|מנטובה",
+      "n": 9
+    },
+    {
+      "decade": 1750,
+      "place": "Venice|ונציה",
+      "n": 73
+    },
+    {
+      "decade": 1670,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 8
+    },
+    {
+      "decade": 1790,
+      "place": "Istanbul|קושטא",
+      "n": 3
+    },
+    {
+      "decade": 1690,
+      "place": "Prague|פרג",
+      "n": 37
+    },
+    {
+      "decade": 1700,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 1
+    },
+    {
+      "decade": 1590,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 19
+    },
+    {
+      "decade": 1740,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 84
+    },
+    {
+      "decade": 1800,
+      "place": "Amsterdam|אמשטרדם",
+      "n": 5
+    },
+    {
+      "decade": 1710,
+      "place": "Prague|פרג",
+      "n": 20
+    },
+    {
+      "decade": 1800,
+      "place": "Venice|ונציה",
+      "n": 23
+    },
+    {
+      "decade": 1660,
+      "place": "Mantua|מנטובה",
+      "n": 26
+    },
+    {
+      "decade": 1710,
+      "place": "Mantua|מנטובה",
+      "n": 10
+    },
+    {
+      "decade": 1510,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 7
+    },
+    {
+      "decade": 1700,
+      "place": "Berlin|ברלין",
+      "n": 15
+    },
+    {
+      "decade": 1550,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 6
+    },
+    {
+      "decade": 1660,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 6
+    },
+    {
+      "decade": 1510,
+      "place": "Mantua|מנטובה",
+      "n": 4
+    },
+    {
+      "decade": 1670,
+      "place": "Istanbul|קושטא",
+      "n": 4
+    },
+    {
+      "decade": 1780,
+      "place": "Istanbul|קושטא",
+      "n": 4
+    },
+    {
+      "decade": 1790,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 2
+    },
+    {
+      "decade": 1570,
+      "place": "Mantua|מנטובה",
+      "n": 18
+    },
+    {
+      "decade": 1640,
+      "place": "Prague|פרג",
+      "n": 15
+    },
+    {
+      "decade": 1690,
+      "place": "Zholkva|זולקוה",
+      "n": 11
+    },
+    {
+      "decade": 1720,
+      "place": "Berlin|ברלין",
+      "n": 19
+    },
+    {
+      "decade": 1610,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 6
+    },
+    {
+      "decade": 1760,
+      "place": "Livorno|ליוורנו",
+      "n": 25
+    },
+    {
+      "decade": 1750,
+      "place": "Livorno|ליוורנו",
+      "n": 15
+    },
+    {
+      "decade": 1470,
+      "place": "Mantua|מנטובה",
+      "n": 7
+    },
+    {
+      "decade": 1800,
+      "place": "Prague|פרג",
+      "n": 2
+    },
+    {
+      "decade": 1540,
+      "place": "Prague|פרג",
+      "n": 3
+    },
+    {
+      "decade": 1770,
+      "place": "Istanbul|קושטא",
+      "n": 16
+    },
+    {
+      "decade": 1800,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 14
+    },
+    {
+      "decade": 1590,
+      "place": "Mantua|מנטובה",
+      "n": 16
+    },
+    {
+      "decade": 1770,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 3
+    },
+    {
+      "decade": 1610,
+      "place": "Mantua|מנטובה",
+      "n": 10
+    },
+    {
+      "decade": 1660,
+      "place": "Cracow|קרקוב",
+      "n": 7
+    },
+    {
+      "decade": 1790,
+      "place": "Mantua|מנטובה",
+      "n": 19
+    },
+    {
+      "decade": 1640,
+      "place": "Mantua|מנטובה",
+      "n": 10
+    },
+    {
+      "decade": 1700,
+      "place": "Mantua|מנטובה",
+      "n": 11
+    },
+    {
+      "decade": 1680,
+      "place": "Mantua|מנטובה",
+      "n": 11
+    },
+    {
+      "decade": 1800,
+      "place": "Berlin|ברלין",
+      "n": 1
+    },
+    {
+      "decade": 1780,
+      "place": "Venice|ונציה",
+      "n": 27
+    },
+    {
+      "decade": 1710,
+      "place": "Zholkva|זולקוה",
+      "n": 2
+    },
+    {
+      "decade": 1710,
+      "place": "Fuerth|פירט",
+      "n": 2
+    },
+    {
+      "decade": 1620,
+      "place": "Cracow|קרקוב",
+      "n": 5
+    },
+    {
+      "decade": 1540,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 3
+    },
+    {
+      "decade": 1700,
+      "place": "Livorno|ליוורנו",
+      "n": 1
+    },
+    {
+      "decade": 1530,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 3
+    },
+    {
+      "decade": 1620,
+      "place": "Thessaloniki|שלוניקי",
+      "n": 2
+    },
+    {
+      "decade": 1520,
+      "place": "Prague|פרג",
+      "n": 8
+    },
+    {
+      "decade": 1530,
+      "place": "Prague|פרג",
+      "n": 6
+    },
+    {
+      "decade": 1640,
+      "place": "Livorno|ליוורנו",
+      "n": 1
+    },
+    {
+      "decade": 1690,
+      "place": "Istanbul|קושטא",
+      "n": 1
+    },
+    {
+      "decade": 1490,
+      "place": "Istanbul|קושטא",
+      "n": 1
+    },
+    {
+      "decade": 1550,
+      "place": "Prague|פרג",
+      "n": 3
+    },
+    {
+      "decade": 1670,
+      "place": "Cracow|קרקוב",
+      "n": 2
+    },
+    {
+      "decade": 1800,
+      "place": "Istanbul|קושטא",
+      "n": 2
+    },
+    {
+      "decade": 1630,
+      "place": "Mantua|מנטובה",
+      "n": 6
+    },
+    {
+      "decade": 1540,
+      "place": "Cracow|קרקוב",
+      "n": 1
+    },
+    {
+      "decade": 1630,
+      "place": "Istanbul|קושטא",
+      "n": 1
+    },
+    {
+      "decade": 1600,
+      "place": "Mantua|מנטובה",
+      "n": 4
+    },
+    {
+      "decade": 1510,
+      "place": "Prague|פרג",
+      "n": 5
+    },
+    {
+      "decade": 1800,
+      "place": "Fuerth|פירט",
+      "n": 1
+    },
+    {
+      "decade": 1560,
+      "place": "Prague|פרג",
+      "n": 2
+    },
+    {
+      "decade": 1780,
+      "place": "Frankfort on the Main|פרנקפורט דמין",
+      "n": 1
+    },
+    {
+      "decade": 1730,
+      "place": "Livorno|ליוורנו",
+      "n": 1
+    },
+    {
+      "decade": 1700,
+      "place": "Cracow|קרקוב",
       "n": 1
     }
   ]

@@ -79,12 +79,19 @@ def main() -> None:
     place_hist: Counter[str] = Counter()
     work_hist: Counter[str] = Counter()
     author_hist: Counter[str] = Counter()
+    type_hist: Counter[str] = Counter()
+    genre_hist: Counter[str] = Counter()
+    language_hist: Counter[str] = Counter()
     signal_hist: Counter[str] = Counter()
     haskama_by_century: Counter[int] = Counter()
     chronogram_by_century: Counter[int] = Counter()
+    haskama_by_decade: Counter[int] = Counter()
+    chronogram_by_decade: Counter[int] = Counter()
     records_by_century: Counter[int] = Counter()
     haskama_by_decade_place: dict[tuple[int, str], int] = defaultdict(int)
     chronogram_by_decade_place: dict[tuple[int, str], int] = defaultdict(int)
+    place_by_century: dict[tuple[str, int], int] = defaultdict(int)
+    decade_by_place: dict[tuple[int, str], int] = defaultdict(int)
 
     with TSV.open(encoding="utf-8") as f:
         reader = csv.reader(f, delimiter="\t", quoting=csv.QUOTE_MINIMAL)
@@ -130,18 +137,31 @@ def main() -> None:
             records_by_century[rec["century"]] += 1
             if place_norm:
                 place_hist[place_norm] += 1
+                place_by_century[(place_norm, rec["century"])] += 1
+                decade_by_place[(rec["decade"], place_norm)] += 1
             if rec["uniform_130"]:
                 work_hist[rec["uniform_130"]] += 1
             if rec["author_100"]:
                 author_hist[rec["author_100"]] += 1
+            if rec["type_901"]:
+                type_hist[rec["type_901"]] += 1
+            if rec["genre_690"]:
+                genre_hist[rec["genre_690"]] += 1
+            if rec["language_041"]:
+                # First token of the language string (first language code).
+                lang = rec["language_041"].split("|")[0].strip()
+                if lang:
+                    language_hist[lang] += 1
             for s in signals:
                 signal_hist[s] += 1
             if rec["haskama_915"]:
                 haskama_by_century[rec["century"]] += 1
+                haskama_by_decade[rec["decade"]] += 1
                 if place_norm:
                     haskama_by_decade_place[(rec["decade"], place_norm)] += 1
             if rec["chronogram_912"]:
                 chronogram_by_century[rec["century"]] += 1
+                chronogram_by_decade[rec["decade"]] += 1
                 if place_norm:
                     chronogram_by_decade_place[(rec["decade"], place_norm)] += 1
 
@@ -150,6 +170,7 @@ def main() -> None:
     with gzip.open(out_records, "wt", encoding="utf-8") as fh:
         json.dump(records, fh, ensure_ascii=False)
 
+    top_places_set = {p for p, _ in place_hist.most_common(12)}
     summary = {
         "total_in_scope": len(records),
         "year_min": min(r["year"] for r in records),
@@ -163,13 +184,18 @@ def main() -> None:
         "distinct_authors_100": len(author_hist),
         "haskama_total": sum(haskama_by_century.values()),
         "haskama_by_century": dict(sorted(haskama_by_century.items())),
+        "haskama_by_decade": dict(sorted(haskama_by_decade.items())),
         "chronogram_total": sum(chronogram_by_century.values()),
         "chronogram_by_century": dict(sorted(chronogram_by_century.items())),
+        "chronogram_by_decade": dict(sorted(chronogram_by_decade.items())),
         "signals_by_kind": dict(signal_hist),
         "records_any_signal": sum(1 for r in records if r["signals"]),
         "top_places": place_hist.most_common(20),
         "top_works": work_hist.most_common(20),
         "top_authors": author_hist.most_common(20),
+        "top_types": type_hist.most_common(15),
+        "top_genres": genre_hist.most_common(15),
+        "top_languages": language_hist.most_common(15),
         "haskama_decade_place": [
             {"decade": d, "place": p, "n": n}
             for (d, p), n in haskama_by_decade_place.items()
@@ -177,6 +203,11 @@ def main() -> None:
         "chronogram_decade_place": [
             {"decade": d, "place": p, "n": n}
             for (d, p), n in chronogram_by_decade_place.items()
+        ],
+        "decade_place_top12": [
+            {"decade": d, "place": p, "n": n}
+            for (d, p), n in decade_by_place.items()
+            if p in top_places_set
         ],
     }
     (OUT_DATA / "bhb_pre1800_summary.json").write_text(

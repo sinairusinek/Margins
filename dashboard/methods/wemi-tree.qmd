@@ -1,0 +1,78 @@
+---
+title: "Where WEMI breaks — the Venice Haggadot, as a tree"
+subtitle: "A worked example from BHB · Work → Expression → Manifestation → Issue → Item"
+---
+
+The diagram below visualises a single Work — **הגדה של פסח** (the Passover Haggadah) — as it is realised in the pre-1800 BHB records. It is read **top-down**: the Work sits at the top, fans into language-defined **Expressions**, then into dated **Manifestations**, and finally — under the two Venice branches highlighted in red — into **Issues**, the sub-Manifestation level that WEMI cannot represent.
+
+The five Expression branches that fan out to many uneventful Manifestations are summarised; the diagram **concentrates the visual mass on Expression D (Hebrew + Judeo-Italian)**, where the analytically interesting complication lives: in 1716 and again in 1740, Bragadin printed the body sheets once and bound them with **two different Birkat-HaMazon quires** — Italian rite and Ashkenazi rite — producing two distinct publishing units from one setting of type. Each Issue carries its own MBI record and its own 500-note (yellow). The green **scan-target** at the bottom marks the specific physical copy the project will digitise: an Item, the level below WEMI's Manifestation that grounds the rest.
+
+```{mermaid}
+%%| fig-cap: "Work → Expression → Manifestation → Issue → Item. Red nodes are the WEMI-untyped sub-Manifestation level."
+%%| fig-width: 9
+flowchart TD
+    classDef work fill:#1a1a2e,color:#fff,stroke:#1a1a2e,stroke-width:3px,font-size:16px
+    classDef expr fill:#16213e,color:#fff,stroke:#16213e,stroke-width:2px
+    classDef exprFocus fill:#0f3460,color:#fff,stroke:#e94560,stroke-width:3px
+    classDef manif fill:#274c77,color:#fff,stroke:#274c77,stroke-width:2px
+    classDef manifFocus fill:#274c77,color:#fff,stroke:#e94560,stroke-width:3px
+    classDef issue fill:#e94560,color:#fff,stroke:#a8324a,stroke-width:2px
+    classDef note fill:#fff8d6,color:#5a4a00,stroke:#caa400,stroke-width:1px
+    classDef item fill:#06d6a0,color:#003c2c,stroke:#02704f,stroke-width:3px,font-size:14px
+    classDef dim fill:#e5e5e5,color:#666,stroke:#bbb,stroke-dasharray:4 3
+
+    W(["יצירה · Work<br/><b>הגדה של פסח</b><br/>Passover Haggadah"]):::work
+
+    W --> EA["ביטוי A · heb<br/>עברית בלבד"]:::expr
+    W --> EB["ביטוי B · heb|lad<br/>עברית + לאדינו"]:::expr
+    W --> EC["ביטוי C · heb|yid<br/>עברית + אידיש"]:::expr
+    W --> ED["ביטוי D · heb|jit<br/><b>עברית + יהודית-איטלקית</b><br/>בלשון איטליאנו"]:::exprFocus
+    W --> EE["ביטוי E · heb|ghb<br/>עברית + יהודית-ערבית"]:::expr
+    W --> EF["ביטוי F · heb|eng<br/>עברית + אנגלית"]:::expr
+
+    EA --> EAm[(≈ 11 התגלמויות<br/>Sulzbach · Amsterdam · Venice · …)]:::dim
+    EB --> EBm[(7 התגלמויות בויניציאה<br/>1609 · 1629 · 1695 · 1716 · 1758)]:::dim
+    EC --> ECm[(4 התגלמויות<br/>Venice 1629 · Amsterdam 1733 · …)]:::dim
+    EE --> EEm[(3 התגלמויות<br/>Vienna 1791 · Sulzbach 1792 · Offenbach 1795)]:::dim
+    EF --> EFm[(1 התגלמות<br/>London 1794)]:::dim
+
+    ED --> M1716["התגלמות · Manifestation<br/><b>ויניציאה 1716</b><br/>בית בראגאדין"]:::manifFocus
+    ED --> M1740["התגלמות · Manifestation<br/><b>ויניציאה 1740</b><br/>בית בראגאדין"]:::manifFocus
+    ED --> M1758["התגלמות · Manifestation<br/>ויניציאה 1758<br/>MBI 000119015"]:::manif
+
+    M1716 --> I93["הוצאה · Issue 1<br/>ברכת המזון<br/>נוסח איטליאני<br/><b>MBI 000118993</b>"]:::issue
+    M1716 --> I94["הוצאה · Issue 2<br/>ברכת המזון<br/>נוסח אשכנז<br/><b>MBI 000118994</b>"]:::issue
+    M1740 --> I04["הוצאה · Issue 1<br/>ברכת המזון<br/>נוסח איטליאני<br/><b>MBI 000119004</b>"]:::issue
+    M1740 --> I05["הוצאה · Issue 2<br/>ברכת המזון<br/>נוסח אשכנז<br/><b>MBI 000119005</b>"]:::issue
+
+    I93 -.- N93["📝 note 500<br/>«יצאה בשלוש מהדורות:<br/>בלשון איטליאנו, בלשון אשכנזים<br/>ובלשון ספרדים»"]:::note
+    I94 -.- N94["📝 note 500<br/>«ההבדל היחיד בין שתי ההגדות<br/>הוא בברכת המזון,<br/>שזו שלפנינו נוסחה אשכנזי»"]:::note
+    I04 -.- N04["📝 note 500<br/>«נוסח ההגדה כמנהג בני רומה»"]:::note
+    I05 -.- N05["📝 note 500<br/>«ההבדל היחיד … הוא בברכת המזון,<br/>שזו נוסחתה אשכנז»"]:::note
+
+    I94 ==> ITEM(["📖 עותק · Item<br/><b>הטופס שייסרק</b><br/>The specific copy<br/>to be digitised<br/>—————<br/>[holding institution / shelfmark]"]):::item
+```
+
+## Reading the diagram
+
+| Layer | Symbol | What it is | WEMI status |
+|---|---|---|---|
+| **Work** | dark navy capsule, top | the abstract Haggadah text-tradition | ✓ modelled (`Work`) |
+| **Expression** | navy rectangles | language/rite version (heb / heb+lad / heb+yid / heb+jit / heb+ghb / heb+eng) | ✓ modelled (`Expression`); collapsed in MARC |
+| **Manifestation** | blue rectangles | year × place × press print event; one BHB record | ✓ modelled (`Manifestation`); = one row in MBI |
+| **Issue** | **red rectangles** | sub-Manifestation publishing unit, sharing setting of type but with a swapped quire | ✗ **no WEMI slot**; lives in 500-notes |
+| **Note 500** | yellow tabs | the prose evidence the cataloguer left behind | free text in MARC `500` |
+| **Item** | green capsule | a specific physical copy — the scan target | ✓ modelled (`Item`) |
+
+## What the diagram is doing visually
+
+- The five thin grey branches show, by abstraction, that almost every Expression resolves into a flat list of Manifestations — the case WEMI was designed for and handles cleanly.
+- **Expression D** is widened and outlined in red to signal that this is where the model breaks. Two of its Manifestations (1716, 1740) split into a pair of **Issues** instead of fanning out further as new Manifestations.
+- The yellow 500-notes are anchored to their Issues with dashed lines because in MARC they are *not* a structural relation — they are prose. Lifting them into a structured `issue` / `state` field is exactly what §7 of the methods chapter argues for.
+- The green Item node sits below one specific Issue (000118994 — the Ashkenazi-rite Birkat-HaMazon issue) to mark where the Margins scan attaches in the chain: a single copy of one Issue of one Manifestation of one Expression of one Work — five levels down from the root.
+
+## Why this matters for the project
+
+A counting query of the form `count(*) GROUP BY 130, 041` collapses the two red boxes under each Venice node into **one row** — the issue distinction vanishes. The two MBI records remain in the dump (as MARC records they exist separately), but the *relationship* between them is invisible to any aggregation. Promoting the 500-note evidence to a structured sub-Manifestation field is what §11.4 of the methods chapter drafts in long form, and what an LRMoo `F32 Carrier Production Event` chain would carry natively. The diagram above is the picture of that argument.
+
+A full prose treatment of the case lives in **Methods → §11** of the [bibliographic units chapter](bibliographic_units_and_marc.qmd#sec-11).

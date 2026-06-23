@@ -496,78 +496,8 @@ In Bowers/Gaskell terms this is a textbook **issue** (same body sheets, swapped 
 
 ### 11.3 The structure as a tree
 
-```
-יצירה (Work) ──── הגדה של פסח
-│
-├── ביטוי A · עברית בלבד  (heb)
-│   ├── התגלמות · זולצבאך 1711                       [MBI 000118987]
-│   ├── התגלמות · אמשטרדם 1712                       [MBI 000118989]
-│   │   └── הערה: דינים באשכנזית, אותיות צו"ר; תרגום אשכנזי לפיוטים
-│   ├── התגלמות · אמשטרדם 1712                       [MBI 000118990]
-│   │   └── הערה: דינים באשכנזית-יהודית; תרגום אשכנזי-יהודי לפיוטים
-│   ├── התגלמות · ויניציאה 1601                      [MBI 000184737]
-│   ├── התגלמות · ויניציאה 1603                      [MBI 000184739]
-│   ├── התגלמות · ויניציאה 1604                      [MBI 000184740]
-│   ├── התגלמות · זולצבאך 1726                       [MBI 000118999]
-│   ├── התגלמות · זולצבאך 1746                       [MBI 000119008]
-│   ├── התגלמות · מיץ 1765                           [MBI 000119025]
-│   ├── התגלמות · פיורדא 1790                        [MBI 000119060]
-│   └── התגלמות · פיורדא 1792                        [MBI 000119066]
-│
-├── ביטוי B · עברית + לאדינו  (heb|lad)             "בלשון ספרדים"
-│   ├── התגלמות · ויניציאה 1609                      [MBI 000118968]
-│   │   └── הערה: הציורים וה"פתרון" שימשו אב-טיפוס להוצאות הבאות בויניציאה
-│   ├── התגלמות · ויניציאה 1629                      [MBI 000118973]
-│   │   └── הערה: הציורים והתרגום לפי ויניציאה שס"ט (1609)
-│   ├── התגלמות · ויניציאה 1695                      [MBI 000118983]
-│   ├── התגלמות · ויניציאה 1716                      [MBI 000118992]
-│   │   └── (אחות לויניציאה 1716 jit — ביטוי D)
-│   ├── התגלמות · אמשטרדם 1712                       [MBI 000118988]
-│   ├── התגלמות · ויניציאה 1740                      (היא הסדרה האיטלקית)
-│   └── התגלמות · ויניציאה 1758                      [MBI 000119016]
-│
-├── ביטוי C · עברית + אידיש  (heb|yid)              "בלשון אשכנזים"
-│   ├── התגלמות · ויניציאה 1629                      [MBI 000118972]
-│   ├── התגלמות · אמשטרדם 1733                       [MBI 000119002]
-│   ├── התגלמות · הוראדנא 1791                       [MBI 000119062]
-│   └── התגלמות · פפד"א 1798                         [MBI 000119092]
-│
-├── ביטוי D · עברית + יהודית-איטלקית  (heb|jit)     "בלשון איטליאנו"
-│   ├── התגלמות · ויניציאה 1716                      ← נקודת השבר: שני Issues
-│   │   ├── הוצאה (Issue) 1 · ברכת המזון בנוסח איטליאני        [MBI 000118993]
-│   │   │     └─ note 500: "יצאה בשלוש מהדורות: בלשון איטליאנו,
-│   │   │                   בלשון אשכנזים ובלשון ספרדים"
-│   │   └── הוצאה (Issue) 2 · ברכת המזון בנוסח אשכנז           [MBI 000118994]
-│   │         └─ note 500: "ההבדל היחיד בין שתי ההגדות הוא
-│   │                       בברכת המזון, שזו שלפנינו נוסחה אשכנזי"
-│   │         └─ יחידה מוחלפת: קונטרס ברכת המזון בלבד
-│   │
-│   ├── התגלמות · ויניציאה 1740                      ← אותה תופעה חוזרת
-│   │   ├── הוצאה 1 · ברכת המזון בנוסח איטליאני               [MBI 000119004]
-│   │   │     └─ note 500: "נוסח ההגדה כמנהג בני רומה"
-│   │   └── הוצאה 2 · ברכת המזון בנוסח אשכנז                  [MBI 000119005]
-│   │         └─ note 500: "ההבדל היחיד … הוא בברכת המזון"
-│   │
-│   └── התגלמות · ויניציאה 1758                      [MBI 000119015]
-│         └─ 250: "נדפס … מחדש לתשוקת … גד בכ"ר שמואל פואה"
-│         └─ note 500: "נוסח בני רומה. הציורים על-פי ויניציאה שפ"ט"
-│
-├── ביטוי E · עברית + יהודית-ערבית  (heb|ghb)
-│   ├── התגלמות · ווין 1791                          [MBI 000119063]
-│   ├── התגלמות · זולצבאך 1792                       [MBI 000119065]
-│   └── התגלמות · [אופנבאך] 1795                     [MBI 000119077]
-│
-└── ביטוי F · עברית + אנגלית  (heb|eng)
-    └── התגלמות · London 1794                        [MBI 000119073]
-```
+The full Work → Expression → Manifestation → Issue → Item tree for this case has been moved to its own page: **[WEMI Tree — the Venice Haggadot](wemi-tree.qmd)** (Methods → WEMI Tree on the dashboard navbar). The diagram concentrates the visual mass on Expression D (Hebrew + Judeo-Italian), where the 1716 and 1740 Venice nodes split into Issues that WEMI cannot represent, and pins a specific copy at the Item level as the project's scan target.
 
-Reading the tree:
-
-- The **Work** (root) is the abstract Haggadah-of-Pesach text-tradition.
-- Each **Expression** branch corresponds to a distinct text-version defined by its language pairing (and, implicitly, by its target rite-community — Italian / Sephardi / Ashkenazi / Yemenite-North-African / Anglo).
-- Each **Manifestation** is a year×place×press print event recorded as one BHB record.
-- Under Expression D, the 1716 and 1740 Venice nodes break a fourth time into **Issues** — sub-Manifestations sharing setting of type but diverging in one swapped quire. WEMI has no slot for this fourth level; in BHB it appears as two MARC records *plus* a 500-note that cross-references them.
-- The dashed cross-link between B-1716-Venice and D-1716-Venice (and the Yiddish version printed the same year, captured in note 500 of MBI 000118993) reflects the fact that Bragadin issued a *coordinated set of three language-issues* from a partially shared production — itself a relationship type ("sibling-Manifestation-by-press-event") that WEMI does not name and that LRMoo would model through a shared `F32 Carrier Production Event`.
 
 ### 11.4 An elaborated 500-note on MBI 000118994 (Venice 1716, heb\|jit)
 

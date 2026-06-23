@@ -18,6 +18,8 @@ website:
         text: Desiderata
       - href: methods/bibliographic_units_and_marc.qmd
         text: Methods
+      - href: methods/wemi-tree.qmd
+        text: WEMI Tree
       - href: about.qmd
         text: About
     right:
